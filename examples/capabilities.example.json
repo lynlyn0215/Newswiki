@@ -1,0 +1,36 @@
+{
+  "capabilities": [
+    {
+      "id": "skill.wiki-past-knowledge",
+      "name": "Wiki Past Knowledge",
+      "description": "Retrieve prior decisions, patterns, pitfalls, and gaps before planning.",
+      "tags": ["wiki", "memory", "planning"]
+    },
+    {
+      "id": "mcp.newswiki-newsfeed",
+      "name": "Newsfeed MCP",
+      "description": "Query recent articles, trends, source health, and wiki candidates.",
+      "tags": ["newsfeed", "current", "research"]
+    },
+    {
+      "id": "connector.agent-search",
+      "name": "AgentSearch",
+      "description": "Optional self-hosted search and page extraction connector.",
+      "tags": ["search", "web", "mcp"]
+    }
+  ],
+  "chains": [
+    {
+      "id": "startup.default",
+      "name": "Default Newswiki Startup",
+      "intents": ["plan", "work", "research", "architecture"],
+      "steps": ["Capability MCP", "Wiki MCP", "Newsfeed MCP when current information matters"]
+    },
+    {
+      "id": "news.to.wiki",
+      "name": "News To Wiki",
+      "intents": ["ingest", "wiki", "newsfeed"],
+      "steps": ["Newsfeed MCP", "optional NotebookLM bridge", "Wiki MCP write-back"]
+    }
+  ]
+}

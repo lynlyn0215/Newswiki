@@ -1,0 +1,11 @@
+{
+  "articles": [
+    {
+      "id": "demo-001",
+      "title": "Example agent workflow release",
+      "category": "agent",
+      "summary": "Fake public demo article.",
+      "published_at": "2026-01-01T09:00:00Z"
+    }
+  ]
+}

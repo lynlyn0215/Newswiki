@@ -1,0 +1,9 @@
+{
+  "transport": "http",
+  "batch_size": 3,
+  "min_body_length": 700,
+  "input": "data/news/articles.json",
+  "output": "state/notebooklm",
+  "wiki_dir": "wiki",
+  "dry_run": true
+}

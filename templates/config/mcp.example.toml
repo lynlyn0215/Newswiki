@@ -1,0 +1,14 @@
+# Example Codex-style MCP config.
+# Copy into your private agent config and replace paths.
+
+[mcp_servers.newswiki-wiki]
+command = "python"
+args = ["PATH_TO_NEWSWIKI_REPO/mcp/wiki/server.py", "--wiki-root", "PATH_TO_PRIVATE_INSTANCE"]
+
+[mcp_servers.newswiki-capabilities]
+command = "python"
+args = ["PATH_TO_NEWSWIKI_REPO/mcp/capabilities/server.py", "--catalog", "PATH_TO_PRIVATE_INSTANCE/capabilities.json"]
+
+[mcp_servers.newswiki-newsfeed]
+command = "python"
+args = ["PATH_TO_NEWSWIKI_REPO/mcp/newsfeed/server.py", "--data-dir", "PATH_TO_PRIVATE_INSTANCE/data/news"]

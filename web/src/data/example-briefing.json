@@ -1,0 +1,8 @@
+{
+  "headline": "Demo briefing",
+  "items": [
+    "Capability MCP tells the agent what it can use.",
+    "Wiki MCP tells the agent what it already knows.",
+    "Newsfeed MCP tells the agent what happened recently."
+  ]
+}

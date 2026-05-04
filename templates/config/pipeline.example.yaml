@@ -1,0 +1,25 @@
+timezone: local
+
+paths:
+  data: data
+  wiki: wiki
+  reports: reports
+  state: state
+
+llm:
+  provider: qwen
+  mode: api
+  tasks:
+    classify: true
+    summarize: true
+    translate: true
+
+alternatives:
+  skip_llm_processing: false
+  use_agent_automation_session: true
+  use_notebooklm_bridge: false
+
+outputs:
+  website: true
+  wiki_candidates: true
+  run_reports: true

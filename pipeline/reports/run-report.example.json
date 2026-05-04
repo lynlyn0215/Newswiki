@@ -1,0 +1,17 @@
+{
+  "date": "2026-01-02",
+  "mode": "demo",
+  "steps": [
+    {
+      "name": "collect",
+      "status": "success",
+      "summary": "2 fake items collected"
+    },
+    {
+      "name": "process",
+      "status": "success",
+      "summary": "2 fake items classified"
+    }
+  ],
+  "action_required": []
+}

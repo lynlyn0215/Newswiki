@@ -1,0 +1,12 @@
+{
+  "headline": "Fake demo trend: agents need startup context, not bigger prompts.",
+  "signals": [
+    "Capability lookup reduces tool guesswork.",
+    "Wiki memory prevents repeated planning mistakes.",
+    "Newsfeed context adds current awareness when useful."
+  ],
+  "opportunities": [
+    "Package startup context as MCP tools.",
+    "Keep private data local by default."
+  ]
+}

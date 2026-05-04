@@ -1,0 +1,27 @@
+sources:
+  - id: example_rss
+    name: Example RSS
+    type: rss_feed
+    url: https://example.com/feed.xml
+    group: ai
+    outputs:
+      website: true
+      wiki: false
+
+  - id: manual_inbox
+    name: Manual Inbox
+    type: folder
+    path: inbox
+    group: general
+    outputs:
+      website: false
+      wiki: true
+
+  - id: search_connector
+    name: Search Connector
+    type: agent_search
+    endpoint: http://localhost:3939
+    group: research
+    outputs:
+      website: false
+      wiki: true

@@ -1,0 +1,50 @@
+# Private instance data at repository root
+/data/
+/wiki/
+/raw/
+/reviews/
+/state/
+/sessions/
+/logs/
+/reports/
+/outputs/
+/chrome-profile/
+
+# Runtime artifacts
+*.db
+*.sqlite
+*.sqlite3
+pipeline_raw.json
+pipeline_processed.json
+collector_report.json
+pipeline-to-wiki-state.json
+session.json
+agent-a-result-*.json
+agent-a-final-wiki-*.json
+
+# Secrets
+.env
+.env.*
+!.env.example
+*token*
+*secret*
+*credentials*
+
+# Python
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+
+# Node
+node_modules/
+.next/
+dist/
+build/
+package-lock.json
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

@@ -1,0 +1,30 @@
+{
+  "articles": [
+    {
+      "id": "demo-001",
+      "title": "Example agent workflow release",
+      "source": "example_rss",
+      "source_url": "https://example.com/agent-workflow-release",
+      "category": "agent",
+      "published_at": "2026-01-01T09:00:00Z",
+      "summary": "A fake article used to demonstrate Newsfeed MCP responses.",
+      "summary_zh": "用于演示 Newsfeed MCP 响应的假文章。",
+      "tags": ["agent", "workflow"],
+      "show_on_website": true,
+      "wiki_candidate": true
+    },
+    {
+      "id": "demo-002",
+      "title": "Example model cost update",
+      "source": "manual_inbox",
+      "source_url": "https://example.com/model-cost-update",
+      "category": "ai",
+      "published_at": "2026-01-02T09:00:00Z",
+      "summary": "A fake item showing provider-neutral LLM processing.",
+      "summary_zh": "展示供应商中立 LLM 处理的假条目。",
+      "tags": ["ai", "cost"],
+      "show_on_website": true,
+      "wiki_candidate": false
+    }
+  ]
+}
