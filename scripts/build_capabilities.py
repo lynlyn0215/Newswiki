@@ -120,6 +120,10 @@ def scan_cli_tools(tool_names: list[str]) -> list[dict]:
 
 def build_chains(items: list[dict]) -> list[dict]:
     ids = {item["id"] for item in items}
+    haystack = " ".join(
+        " ".join(str(item.get(key, "")) for key in ["id", "name", "description", "tags"]).lower()
+        for item in items
+    )
     chains = [
         {
             "id": "startup.default",
@@ -144,6 +148,20 @@ def build_chains(items: list[dict]) -> list[dict]:
                 "name": "Recent News Context",
                 "intents": ["news", "current", "trend", "research"],
                 "steps": ["Newsfeed MCP", "Wiki MCP for durable follow-up"],
+            }
+        )
+    if any(term in haystack for term in ["product", "market", "research", "deep-research", "hv-analysis", "ideate"]):
+        chains.append(
+            {
+                "id": "product.discovery",
+                "name": "Product Discovery",
+                "intents": ["product", "market", "saas", "hosted", "customer", "research", "validation"],
+                "steps": [
+                    "Capability MCP for research and product-analysis skills",
+                    "Wiki MCP for prior product decisions and pitfalls",
+                    "Newsfeed MCP or web research for current market signals",
+                    "write back durable product decisions or gaps",
+                ],
             }
         )
     return chains

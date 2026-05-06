@@ -80,3 +80,42 @@ Expected answer:
 - self-hosting gives ownership and inspectability
 - hosted service gives maintained intelligence and operational relief
 - the two are complementary
+
+## Product-Value MCP Test
+
+After Claude Code has connected the three local MCP servers, use this prompt to test whether it actually uses Newswiki context during real work:
+
+```text
+I want to decide whether a hosted Newswiki MCP service is worth continuing as a SaaS product.
+
+Follow the Newswiki startup protocol:
+
+1. Use Capability MCP to find the relevant skill, tool, or workflow chain for this task.
+2. Use Wiki MCP to retrieve past knowledge about Newswiki, MCP, hosted service, open-core positioning, prior decisions, patterns, pitfalls, and gaps.
+3. Use Newsfeed MCP to check recent signals or source health. If the Newsfeed data is only demo data, say that clearly.
+
+Then give me a product judgment:
+
+- the 3 user scenarios most worth validating
+- how to test each scenario
+- success criteria for each test
+- which MCP tools you actually called
+- how each MCP result changed your conclusion
+
+Do not answer from general knowledge alone. Do not pretend demo news is market evidence.
+```
+
+Pass if Claude Code:
+
+- calls at least one Capability MCP tool and one Wiki MCP tool
+- calls Newsfeed MCP or explicitly explains why current signals are unavailable
+- distinguishes empty fresh-instance data from real prior knowledge
+- distinguishes demo news from market evidence
+- changes or qualifies its recommendation based on MCP results
+
+Fail if Claude Code:
+
+- gives a generic product strategy answer without MCP calls
+- claims the demo newsfeed is real market validation
+- ignores an empty wiki or generic capability catalog
+- cannot explain how MCP context affected the answer

@@ -2,15 +2,48 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 
 from mcp.server.fastmcp import FastMCP
+
+STOPWORDS = {
+    "about",
+    "after",
+    "and",
+    "are",
+    "before",
+    "for",
+    "from",
+    "how",
+    "into",
+    "the",
+    "this",
+    "that",
+    "with",
+}
 
 
 def load_catalog(path: Path) -> dict:
     if not path.exists():
         return {"capabilities": [], "chains": []}
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def task_terms(task: str) -> set[str]:
+    return {term for term in re.findall(r"[a-z0-9_-]{3,}", task.lower()) if term not in STOPWORDS}
+
+
+def score_items(items: list[dict], task: str, keys: list[str]) -> list[dict]:
+    terms = task_terms(task)
+    scored = []
+    for item in items:
+        haystack = " ".join(str(item.get(key, "")) for key in keys).lower()
+        score = sum(1 for term in terms if term in haystack)
+        if score:
+            scored.append((score, item))
+    scored.sort(key=lambda pair: pair[0], reverse=True)
+    return [item for _, item in scored]
 
 
 def make_app(catalog_path: Path) -> FastMCP:
@@ -27,28 +60,14 @@ def make_app(catalog_path: Path) -> FastMCP:
     @app.tool()
     def recommend_capabilities(task: str, top: int = 5) -> str:
         catalog = load_catalog(catalog_path)
-        terms = {term.lower() for term in task.split()}
-        scored = []
-        for item in catalog.get("capabilities", []):
-            haystack = " ".join(str(item.get(key, "")) for key in ["id", "name", "description", "tags"]).lower()
-            score = sum(1 for term in terms if term in haystack)
-            if score:
-                scored.append((score, item))
-        scored.sort(key=lambda pair: pair[0], reverse=True)
-        return json.dumps({"task": task, "results": [item for _, item in scored[:top]]}, ensure_ascii=False, indent=2)
+        results = score_items(catalog.get("capabilities", []), task, ["id", "name", "description", "tags"])
+        return json.dumps({"task": task, "results": results[:top]}, ensure_ascii=False, indent=2)
 
     @app.tool()
     def get_skill_chain(task: str, top: int = 1) -> str:
         catalog = load_catalog(catalog_path)
-        terms = {term.lower() for term in task.split()}
-        scored = []
-        for chain in catalog.get("chains", []):
-            haystack = " ".join(str(chain.get(key, "")) for key in ["id", "name", "intents", "steps"]).lower()
-            score = sum(1 for term in terms if term in haystack)
-            if score:
-                scored.append((score, chain))
-        scored.sort(key=lambda pair: pair[0], reverse=True)
-        return json.dumps({"task": task, "chains": [chain for _, chain in scored[:top]]}, ensure_ascii=False, indent=2)
+        chains = score_items(catalog.get("chains", []), task, ["id", "name", "intents", "steps"])
+        return json.dumps({"task": task, "chains": chains[:top]}, ensure_ascii=False, indent=2)
 
     return app
 

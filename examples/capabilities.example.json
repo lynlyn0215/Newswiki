@@ -17,6 +17,18 @@
       "name": "AgentSearch",
       "description": "Optional self-hosted search and page extraction connector.",
       "tags": ["search", "web", "mcp"]
+    },
+    {
+      "id": "skill.product-discovery",
+      "name": "Product Discovery",
+      "description": "Evaluate product ideas, customer scenarios, SaaS positioning, validation tests, and market gaps.",
+      "tags": ["product", "saas", "market", "research", "validation"]
+    },
+    {
+      "id": "skill.deep-research",
+      "name": "Deep Research",
+      "description": "Research external context, competitors, prior art, and current ecosystem signals before product decisions.",
+      "tags": ["research", "market", "competitor", "current"]
     }
   ],
   "chains": [
@@ -31,6 +43,17 @@
       "name": "News To Wiki",
       "intents": ["ingest", "wiki", "newsfeed"],
       "steps": ["Newsfeed MCP", "optional NotebookLM bridge", "Wiki MCP write-back"]
+    },
+    {
+      "id": "product.discovery",
+      "name": "Product Discovery",
+      "intents": ["product", "market", "saas", "hosted", "customer", "research", "validation"],
+      "steps": [
+        "Capability MCP for research and product-analysis skills",
+        "Wiki MCP for prior product decisions and pitfalls",
+        "Newsfeed MCP or web research for current market signals",
+        "write back durable product decisions or gaps"
+      ]
     }
   ]
 }

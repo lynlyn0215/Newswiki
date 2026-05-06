@@ -48,7 +48,28 @@ Pass criteria:
 - it reports remaining manual MCP config steps clearly
 - it does not call itself Codex unless the detected client is actually Codex
 
-### 3. Core Local MCP Client Test
+### 3. Claude Code Product-Value MCP Test
+
+Goal: verify Claude Code can use Newswiki MCP context to shape a real product judgment, not just connect to servers.
+
+Use the Product-Value MCP Test prompt in [claude-code-test.md](claude-code-test.md).
+
+Pass criteria:
+
+- it calls Capability MCP before product recommendations
+- it calls Wiki MCP before product recommendations
+- it calls Newsfeed MCP when judging market/current signals
+- it distinguishes fresh private-instance templates from real history
+- it distinguishes demo news fixtures from real market evidence
+- it explains how MCP context changed or limited the recommendation
+
+Known useful failure signal:
+
+- If Capability MCP only returns `startup.default`, enrich the user's capability catalog with product, research, and customer-discovery skills.
+- If Wiki MCP returns only empty control pages, seed or import durable decisions before relying on past-knowledge recommendations.
+- If Newsfeed MCP returns only demo articles, do not treat the result as market validation.
+
+### 4. Core Local MCP Client Test
 
 Goal: verify the three local Newswiki MCP servers can be used by a client through stdio.
 
@@ -64,7 +85,7 @@ Pass criteria:
 - Capability MCP lists tools and `get_skill_chain` returns a chain.
 - Newsfeed MCP lists tools and `latest_articles` returns demo or private articles.
 
-### 4. MCP Product Quality Test
+### 5. MCP Product Quality Test
 
 Goal: verify `get_context_for_task` is useful as a product surface.
 
@@ -90,7 +111,7 @@ Score each context pack:
 - freshness and confidence present
 - answer helps the agent plan the next step
 
-### 5. Privacy Release Test
+### 6. Privacy Release Test
 
 Goal: prove the public repo and public-safe exports do not leak private data.
 
@@ -120,7 +141,7 @@ Fail on:
 - private source lists
 - raw NotebookLM state
 
-### 6. Design Partner Interview
+### 7. Design Partner Interview
 
 Goal: test whether the hosted service value proposition is clear.
 
@@ -144,6 +165,7 @@ Before public release, pass:
 
 - Fresh clone smoke
 - Claude Code setup test
+- Claude Code product-value MCP test
 - Core local MCP client test
 - Privacy release test
 - MCP product quality test with at least 7 of 10 useful context packs

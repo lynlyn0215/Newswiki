@@ -5,6 +5,7 @@
   "audience": "AI agents acting with a user's local approval",
   "default_private_instance": "~/Newswiki-private",
   "read_first": [
+    "CLAUDE.md",
     "AGENTS.md",
     "docs/agent-setup-protocol.md",
     "docs/agent-checklist.md",
