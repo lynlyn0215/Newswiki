@@ -33,3 +33,21 @@ python scripts/privacy_scan.py
 ```
 
 If code changes touch pipeline behavior, also add focused tests and run them.
+
+## Learning Gate
+
+Before finishing any substantial task, run a concise learning gate:
+
+1. Ask whether this session produced a reusable lesson, pattern, decision, or gap.
+2. Write only durable, high-confidence items that would help a future agent avoid a mistake or choose a better path.
+3. Skip raw logs, temporary status, obvious implementation details, praise, apologies, and low-confidence guesses.
+4. Prefer the `session-learnings-to-wiki` skill or Wiki MCP write-back when available.
+
+Classify write-backs as:
+
+- `learning`: execution lesson, pitfall, or discovered failure mode.
+- `pattern`: reusable workflow, checklist, or repeatable method.
+- `decision`: durable user-approved product, architecture, or workflow choice.
+- `gap`: missing coverage, uncertainty, or future research need.
+
+For Newswiki work, pay special attention to public/private data boundaries, MCP contracts, startup capability discovery, wiki memory retrieval, export validation, deployment reality, and connector/tool limitations.
