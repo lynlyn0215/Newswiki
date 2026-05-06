@@ -88,3 +88,11 @@ Alpha tools:
 - `get_context_for_task(api_key, task, topic?, token_budget?)`
 
 The `api_key` argument must match one of the configured `NEWSWIKI_API_KEYS` values. Invalid keys return a structured error instead of data.
+
+Smoke test the MCP path:
+
+```powershell
+python scripts\smoke_mcp_client.py --api-key local-key --export-dir examples/public
+```
+
+For full setup instructions, see [docs/quickstart-hosted-alpha.md](../docs/quickstart-hosted-alpha.md) and [docs/mcp-client-setup.md](../docs/mcp-client-setup.md).

@@ -48,6 +48,8 @@ NotebookLM is also optional. It can help with long article fetching, evaluation,
 
 Read [docs/quickstart.md](docs/quickstart.md).
 
+To verify the hosted alpha service path, read [docs/quickstart-hosted-alpha.md](docs/quickstart-hosted-alpha.md).
+
 For the central design, read [docs/core-mcps.md](docs/core-mcps.md).
 
 For a practical walkthrough, read [docs/build-your-own.md](docs/build-your-own.md).
