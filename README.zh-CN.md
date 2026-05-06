@@ -1,6 +1,6 @@
 # Newswiki
 
-Newswiki 是一个本地优先的个人 Agent 信息系统模板。
+Newswiki 是一个本地优先的个人 Agent 信息系统模板，也包含一个 hosted MCP alpha 骨架。
 
 ![Newswiki 给 Agent 用的个人信息系统](docs/assets/newswiki-hero.png)
 
@@ -11,6 +11,20 @@ Newswiki 是一个本地优先的个人 Agent 信息系统模板。
 3. 最近发生了什么？ -> Newsfeed MCP
 
 很多人都会做信息源、知识库、网页展示。Newswiki 的核心是 **开工前上下文协议**：让 Agent 在规划和执行之前，先查询能力、长期记忆和近期信息。
+
+## Hosted Alpha
+
+这个 repo 现在也包含一条公开安全的 hosted alpha 路径：
+
+- public-safe export schema 和 validator
+- 只读 REST API
+- hosted MCP adapter
+- 真实 stdio MCP smoke client
+- 静态 context-pack playground
+
+完整跑通步骤见：[Hosted Alpha 快速开始](docs/quickstart-hosted-alpha.md)。
+
+默认只使用假数据。它是产品骨架，不是托管账号系统，也不是你的私人数据后端。
 
 ## 三个核心 MCP
 
@@ -126,11 +140,14 @@ Newswiki-private/
 ## 文档入口
 
 - [快速开始](docs/quickstart.md)
+- [Hosted Alpha 快速开始](docs/quickstart-hosted-alpha.md)
+- [MCP Client 配置](docs/mcp-client-setup.md)
 - [自己搭一套 Newswiki](docs/build-your-own.md)
 - [三个核心 MCP](docs/core-mcps.md)
 - [系统图](docs/system-diagram.md)
 - [隐私边界](docs/privacy.md)
 - [参考项目](docs/references.md)
+- [公开发布清单](docs/public-release-checklist.md)
 
 ## 仓库结构
 
@@ -147,7 +164,8 @@ templates/
 
 pipeline/         可选的信息采集、处理、存储、报告骨架
 connectors/       可选集成：NotebookLM、AgentSearch、浏览器自动化
-web/              可选 Web UI 骨架
+service/          hosted alpha REST / MCP 服务骨架
+web/              可选静态 playground / Web UI 骨架
 examples/         公开安全的假数据
 scripts/          初始化、能力扫描、隐私扫描脚本
 ```

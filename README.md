@@ -1,6 +1,6 @@
 # Newswiki
 
-Newswiki is a local-first personal agent information system template.
+Newswiki is a local-first personal agent information system template and hosted MCP alpha skeleton.
 
 中文说明见 [README.zh-CN.md](README.zh-CN.md).
 
@@ -11,6 +11,20 @@ It helps an agent answer three questions before it starts work:
 3. What happened recently? -> Newsfeed MCP
 
 Most people can build a feed, a wiki, or a small website. Newswiki's core idea is the startup protocol: give the agent a clean way to query capabilities, durable memory, and recent information before choosing a plan.
+
+## Hosted Alpha
+
+This repository now includes a public-safe hosted alpha path:
+
+- public-safe export schema and validator
+- read-only REST API
+- hosted MCP adapter
+- real stdio MCP smoke client
+- static context-pack playground
+
+Run the full path with [docs/quickstart-hosted-alpha.md](docs/quickstart-hosted-alpha.md).
+
+The hosted alpha uses fake example data by default. It is a product skeleton, not a hosted service account or private data backend.
 
 ## Core MCPs
 
@@ -59,10 +73,11 @@ For the visual map, read [docs/system-diagram.md](docs/system-diagram.md).
 ## Repository Shape
 
 - `mcp/` - three core MCP server templates.
+- `service/` - hosted alpha REST and MCP service skeleton.
 - `templates/` - private instance templates.
 - `pipeline/` - optional collection, processing, storage, and report skeletons.
 - `connectors/` - optional integrations.
-- `web/` - optional public/local frontend skeleton.
+- `web/` - optional static playground and frontend skeleton.
 - `examples/` - fake data only.
 
 ## Privacy Rule
