@@ -140,6 +140,8 @@ Newswiki-private/
 ## 文档入口
 
 - [快速开始](docs/quickstart.md)
+- [Agent 自动搭建协议](docs/agent-setup-protocol.md)
+- [Agent 搭建检查清单](docs/agent-checklist.md)
 - [Hosted Alpha 快速开始](docs/quickstart-hosted-alpha.md)
 - [MCP Client 配置](docs/mcp-client-setup.md)
 - [自己搭一套 Newswiki](docs/build-your-own.md)
@@ -168,6 +170,7 @@ service/          hosted alpha REST / MCP 服务骨架
 web/              可选静态 playground / Web UI 骨架
 examples/         公开安全的假数据
 scripts/          初始化、能力扫描、隐私扫描脚本
+newswiki.setup.json  给 AI agent 读取的机器可读搭建 manifest
 ```
 
 ## 隐私规则

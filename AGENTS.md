@@ -16,6 +16,24 @@ Before non-trivial work, query startup context in this order when the tools exis
 
 Then plan or execute.
 
+## User Setup Requests
+
+If the user asks to set up, build, install, configure, or bootstrap their own Newswiki from this repo, treat the user as delegating to an AI agent. Follow:
+
+1. `newswiki.setup.json`
+2. `docs/agent-setup-protocol.md`
+3. `docs/agent-checklist.md`
+
+Default to creating a separate private instance, not writing user data into this repo.
+
+On Windows, prefer:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/agent_setup_newswiki.ps1 -Target "$HOME\Newswiki-private"
+```
+
+Ask before installing dependencies, overwriting a target directory, editing external MCP config, copying private data, publishing, or pushing.
+
 ## Safety
 
 - Do not commit real feeds, real wiki pages, browser sessions, local tokens, or private reports.

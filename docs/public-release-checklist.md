@@ -35,6 +35,12 @@ python scripts\smoke_mcp_client.py --api-key local-key --export-dir examples/pub
 python -m unittest tests.test_public_export_schema service.tests.test_health service.tests.test_search service.tests.test_context_pack service.tests.test_routes service.tests.test_mcp_contract
 ```
 
+Agent-native setup smoke:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\agent_setup_newswiki.ps1 -Target "$env:TEMP\Newswiki-private-smoke" -SkipInstall
+```
+
 Optional web check:
 
 ```powershell

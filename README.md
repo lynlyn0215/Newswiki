@@ -62,6 +62,8 @@ NotebookLM is also optional. It can help with long article fetching, evaluation,
 
 Read [docs/quickstart.md](docs/quickstart.md).
 
+If you want your AI agent to set Newswiki up for you, give it [docs/agent-setup-protocol.md](docs/agent-setup-protocol.md), [docs/agent-checklist.md](docs/agent-checklist.md), and [newswiki.setup.json](newswiki.setup.json).
+
 To verify the hosted alpha service path, read [docs/quickstart-hosted-alpha.md](docs/quickstart-hosted-alpha.md).
 
 For the central design, read [docs/core-mcps.md](docs/core-mcps.md).
@@ -79,6 +81,7 @@ For the visual map, read [docs/system-diagram.md](docs/system-diagram.md).
 - `connectors/` - optional integrations.
 - `web/` - optional static playground and frontend skeleton.
 - `examples/` - fake data only.
+- `newswiki.setup.json` - machine-readable setup manifest for agents.
 
 ## Privacy Rule
 
