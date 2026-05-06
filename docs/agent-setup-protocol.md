@@ -87,6 +87,14 @@ Use:
 ~/Newswiki-private/config/mcp.example.toml
 ```
 
+Before editing any config, detect the user's actual MCP client. Do not call every MCP client Codex.
+
+Examples:
+
+- Codex may use `~/.codex/config.toml`.
+- Claude Code may use its own MCP command or config path.
+- Claude Desktop and other clients may use JSON-style config.
+
 Replace:
 
 - `PATH_TO_NEWSWIKI_REPO`

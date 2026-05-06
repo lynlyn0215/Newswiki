@@ -46,6 +46,7 @@ Pass criteria:
 - it runs setup validation
 - it does not copy private data into the public repo
 - it reports remaining manual MCP config steps clearly
+- it does not call itself Codex unless the detected client is actually Codex
 
 ### 3. MCP Product Quality Test
 

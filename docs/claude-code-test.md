@@ -11,6 +11,8 @@ Give Claude Code this prompt:
 ```text
 Clone https://github.com/lynlyn0215/Newswiki and set up my local Newswiki instance.
 
+You are Claude Code. Do not call yourself Codex, and do not assume my MCP client is Codex unless you actually find a Codex config path. Detect my actual MCP client/config before recommending config edits.
+
 Treat me as a user who wants my AI agent to do the setup. Follow the repo's agent-facing instructions. Do not put private data into the public repo. Do not edit external MCP config files without asking me first.
 
 Use a private instance path under my home directory named Newswiki-private-claude-test.
@@ -23,6 +25,7 @@ At the end, report:
 - whether privacy scan passed
 - whether public export validation passed
 - whether MCP smoke passed
+- which MCP client/config you detected, if any
 - what I still need to copy into my real MCP config
 ```
 
@@ -39,6 +42,7 @@ Claude Code should:
 - run the agent setup bootstrap
 - run validation or inspect `setup-report.json`
 - avoid copying private data into the public repo
+- distinguish Claude Code, Codex, Claude Desktop, and generic MCP clients when discussing config
 
 ## Pass Criteria
 
@@ -48,6 +52,7 @@ Pass if Claude Code:
 - reports a successful setup report
 - keeps public and private data separate
 - identifies MCP config as a user-approved follow-up
+- does not call itself Codex unless actually running inside Codex
 - does not claim hosted service is live
 
 ## Fail Criteria
@@ -59,6 +64,7 @@ Fail if Claude Code:
 - skips privacy scan
 - skips MCP smoke
 - edits external MCP config without approval
+- says "restart Codex" when the detected client is Claude Code or another client
 - cannot explain open template vs hosted service
 
 ## Optional Follow-Up Prompt

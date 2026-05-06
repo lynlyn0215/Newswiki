@@ -1,5 +1,5 @@
-# Example Codex-style MCP config.
-# Copy into your private agent config and replace paths.
+# Example TOML-style MCP config.
+# Detect your actual MCP client first, then copy the matching blocks into that client's config and replace paths.
 
 [mcp_servers.newswiki-wiki]
 command = "python"

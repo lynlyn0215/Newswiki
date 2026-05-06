@@ -30,6 +30,8 @@ Use this checklist when an AI agent sets up Newswiki for a user.
 
 ## MCP Readiness
 
+- [ ] Detect the user's actual MCP client before editing config.
+- [ ] Do not assume the client is Codex unless the user or config path confirms it.
 - [ ] Prepare Wiki MCP config.
 - [ ] Prepare Capability MCP config.
 - [ ] Prepare Newsfeed MCP config.

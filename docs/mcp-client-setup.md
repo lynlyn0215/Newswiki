@@ -12,6 +12,18 @@ python -m service.app.mcp_server --export-dir examples/public --api-keys local-k
 
 This starts the server and waits for an MCP client over stdio.
 
+## Detect Your Client First
+
+Do not assume every MCP client is Codex.
+
+Before editing config, identify the user's actual client:
+
+- Codex may use a `~/.codex/config.toml` style config.
+- Claude Code may use its own MCP configuration command or config location.
+- Claude Desktop and other MCP clients may use JSON-style config.
+
+If you are an AI agent doing setup, state which client/config file you found before editing anything. Ask before changing external config files.
+
 ## Generic Client Config
 
 Use absolute paths in real client configs.
@@ -35,7 +47,7 @@ Use absolute paths in real client configs.
 }
 ```
 
-## Codex / Claude-Style TOML Example
+## TOML-Style Client Example
 
 ```toml
 [mcp_servers.newswiki-hosted-alpha]
