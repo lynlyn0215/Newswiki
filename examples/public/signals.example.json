@@ -1,0 +1,19 @@
+{
+  "signals": [
+    {
+      "id": "signal-demo-001",
+      "title": "Example hosted MCP adoption signal",
+      "summary": "A fake signal showing how Newswiki can expose recent agent infrastructure movement.",
+      "source_urls": ["https://example.com/hosted-mcp-adoption"],
+      "topics": ["mcp", "agent-infrastructure"],
+      "updated_at": "2026-01-02T10:00:00Z",
+      "freshness": "daily",
+      "confidence": "medium",
+      "public_safe": true,
+      "published_at": "2026-01-02T08:00:00Z",
+      "category": "agent",
+      "impact": "Developers increasingly expect hosted MCP endpoints instead of local-only servers.",
+      "why_it_matters": "This creates demand for safe context services that agents can query directly."
+    }
+  ]
+}

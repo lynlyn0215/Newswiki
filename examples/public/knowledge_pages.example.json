@@ -1,0 +1,23 @@
+{
+  "knowledge_pages": [
+    {
+      "id": "knowledge-demo-001",
+      "title": "Hosted MCP services need a public-safe export layer",
+      "summary": "Hosted agent context services should serve sanitized exports instead of private working files.",
+      "source_urls": ["https://example.com/public-safe-export-pattern"],
+      "topics": ["mcp", "privacy", "agent-infrastructure"],
+      "updated_at": "2026-01-02T10:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "slug": "public-safe-export-layer",
+      "kind": "pattern",
+      "key_points": [
+        "Separate internal production systems from hosted read APIs.",
+        "Validate every export before deployment.",
+        "Return source links and freshness metadata."
+      ],
+      "related_tools": ["mcp", "rest-api", "validator"]
+    }
+  ]
+}

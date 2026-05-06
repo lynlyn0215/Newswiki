@@ -1,0 +1,1 @@
+"""Newswiki hosted service core."""

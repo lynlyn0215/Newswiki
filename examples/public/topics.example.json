@@ -1,0 +1,18 @@
+{
+  "topics": [
+    {
+      "id": "topic-demo-001",
+      "title": "MCP",
+      "summary": "Model Context Protocol tools, services, and deployment patterns.",
+      "source_urls": ["https://example.com/mcp-topic"],
+      "topics": ["mcp"],
+      "updated_at": "2026-01-02T10:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "description": "Hosted and local MCP infrastructure for agent context and tools.",
+      "aliases": ["model-context-protocol", "mcp-server"],
+      "parent_topic": "agent-infrastructure"
+    }
+  ]
+}

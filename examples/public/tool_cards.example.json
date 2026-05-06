@@ -1,0 +1,20 @@
+{
+  "tool_cards": [
+    {
+      "id": "tool-demo-001",
+      "title": "Context Pack Builder",
+      "summary": "A service component that assembles signals, knowledge, and tool recommendations for one task.",
+      "source_urls": ["https://example.com/context-pack-builder"],
+      "topics": ["agent-context", "mcp"],
+      "updated_at": "2026-01-02T10:00:00Z",
+      "freshness": "weekly",
+      "confidence": "medium",
+      "public_safe": true,
+      "tool_type": "service-pattern",
+      "homepage_url": "https://example.com/context-pack-builder",
+      "use_cases": ["agent startup", "research briefing", "tool routing"],
+      "agent_fit": "Useful when an agent needs compact task-specific context before planning.",
+      "install_hint": "Implement as a hosted MCP tool and REST endpoint."
+    }
+  ]
+}

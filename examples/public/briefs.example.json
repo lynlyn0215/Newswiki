@@ -1,0 +1,20 @@
+{
+  "briefs": [
+    {
+      "id": "brief-demo-001",
+      "title": "Demo weekly agent infrastructure brief",
+      "summary": "A fake weekly brief for hosted Newswiki alpha testing.",
+      "source_urls": ["https://example.com/weekly-agent-infra-brief"],
+      "topics": ["agent-infrastructure", "mcp"],
+      "updated_at": "2026-01-02T10:00:00Z",
+      "freshness": "weekly",
+      "confidence": "medium",
+      "public_safe": true,
+      "period": "2026-W01",
+      "headline": "Hosted context services are becoming a practical layer for agent builders.",
+      "signals": ["signal-demo-001"],
+      "knowledge": ["knowledge-demo-001"],
+      "tools": ["tool-demo-001"]
+    }
+  ]
+}
