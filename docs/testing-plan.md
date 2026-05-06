@@ -48,7 +48,23 @@ Pass criteria:
 - it reports remaining manual MCP config steps clearly
 - it does not call itself Codex unless the detected client is actually Codex
 
-### 3. MCP Product Quality Test
+### 3. Core Local MCP Client Test
+
+Goal: verify the three local Newswiki MCP servers can be used by a client through stdio.
+
+Command:
+
+```powershell
+python scripts\smoke_core_mcp_client.py --private-instance "$HOME\Newswiki-private-claude-test"
+```
+
+Pass criteria:
+
+- Wiki MCP lists tools and `wiki_past_knowledge` returns pages.
+- Capability MCP lists tools and `get_skill_chain` returns a chain.
+- Newsfeed MCP lists tools and `latest_articles` returns demo or private articles.
+
+### 4. MCP Product Quality Test
 
 Goal: verify `get_context_for_task` is useful as a product surface.
 
@@ -74,7 +90,7 @@ Score each context pack:
 - freshness and confidence present
 - answer helps the agent plan the next step
 
-### 4. Privacy Release Test
+### 5. Privacy Release Test
 
 Goal: prove the public repo and public-safe exports do not leak private data.
 
@@ -104,7 +120,7 @@ Fail on:
 - private source lists
 - raw NotebookLM state
 
-### 5. Design Partner Interview
+### 6. Design Partner Interview
 
 Goal: test whether the hosted service value proposition is clear.
 
@@ -128,6 +144,7 @@ Before public release, pass:
 
 - Fresh clone smoke
 - Claude Code setup test
+- Core local MCP client test
 - Privacy release test
 - MCP product quality test with at least 7 of 10 useful context packs
 - Manual README/open-core positioning review

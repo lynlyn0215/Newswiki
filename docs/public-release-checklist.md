@@ -33,6 +33,7 @@ python -m pip install -r requirements.txt
 python scripts\validate_public_export.py examples\public
 python scripts\privacy_scan.py
 python scripts\smoke_mcp_client.py --api-key local-key --export-dir examples/public
+python scripts\smoke_core_mcp_client.py --private-instance "$HOME\Newswiki-private-claude-test"
 python -m unittest tests.test_public_export_schema service.tests.test_health service.tests.test_search service.tests.test_context_pack service.tests.test_routes service.tests.test_mcp_contract
 ```
 
