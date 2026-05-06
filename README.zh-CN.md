@@ -147,6 +147,8 @@ Newswiki-private/
 - [Hosted Alpha 快速开始](docs/quickstart-hosted-alpha.md)
 - [MCP Client 配置](docs/mcp-client-setup.md)
 - [开源模板与 Hosted Service](docs/open-core.zh-CN.md)
+- [产品测试计划](docs/testing-plan.md)
+- [Claude Code 测试脚本](docs/claude-code-test.md)
 - [自己搭一套 Newswiki](docs/build-your-own.md)
 - [三个核心 MCP](docs/core-mcps.md)
 - [系统图](docs/system-diagram.md)

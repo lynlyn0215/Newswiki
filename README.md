@@ -74,6 +74,8 @@ For a practical walkthrough, read [docs/build-your-own.md](docs/build-your-own.m
 
 For the visual map, read [docs/system-diagram.md](docs/system-diagram.md).
 
+To test the product path with another agent, read [docs/testing-plan.md](docs/testing-plan.md).
+
 ## Repository Shape
 
 - `mcp/` - three core MCP server templates.

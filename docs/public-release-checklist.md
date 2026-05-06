@@ -36,6 +36,12 @@ python scripts\smoke_mcp_client.py --api-key local-key --export-dir examples/pub
 python -m unittest tests.test_public_export_schema service.tests.test_health service.tests.test_search service.tests.test_context_pack service.tests.test_routes service.tests.test_mcp_contract
 ```
 
+Full fresh-clone smoke:
+
+```powershell
+python scripts\fresh_clone_smoke.py --source https://github.com/lynlyn0215/Newswiki.git
+```
+
 Agent-native setup smoke:
 
 ```powershell
