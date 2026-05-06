@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Newswiki Playground</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Newswiki hosted alpha</p>
+        <h1>Agent context playground</h1>
+      </div>
+      <nav aria-label="Primary">
+        <a href="#playground">Playground</a>
+        <a href="#mcp">MCP</a>
+        <a href="#knowledge">Knowledge</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="status-strip" aria-label="Service status">
+        <div>
+          <span class="label">Export</span>
+          <strong>public-safe demo</strong>
+        </div>
+        <div>
+          <span class="label">Freshness</span>
+          <strong id="freshness">loading</strong>
+        </div>
+        <div>
+          <span class="label">Core MCPs</span>
+          <strong>Newsfeed / Wiki / Capability</strong>
+        </div>
+      </section>
+
+      <section id="playground" class="workspace">
+        <div class="panel query-panel">
+          <div class="panel-header">
+            <p class="eyebrow">Task input</p>
+            <h2>What should the agent prepare for?</h2>
+          </div>
+          <label for="task">Task</label>
+          <textarea id="task">Design a hosted MCP context service for coding agents</textarea>
+          <label for="topic">Topic</label>
+          <select id="topic">
+            <option value="mcp">mcp</option>
+            <option value="coding-agents">coding-agents</option>
+            <option value="ai-devtools">ai-devtools</option>
+          </select>
+          <button id="build" type="button">Build context pack</button>
+        </div>
+
+        <div class="panel output-panel" aria-live="polite">
+          <div class="panel-header">
+            <p class="eyebrow">Context pack</p>
+            <h2 id="answer">Ready for a task.</h2>
+          </div>
+          <div class="columns">
+            <section>
+              <h3>Recent signals</h3>
+              <ul id="signals"></ul>
+            </section>
+            <section>
+              <h3>Knowledge</h3>
+              <ul id="knowledge"></ul>
+            </section>
+            <section>
+              <h3>Tool route</h3>
+              <ul id="tools"></ul>
+            </section>
+          </div>
+          <div class="sources">
+            <h3>Sources</h3>
+            <ul id="sources"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="mcp" class="band">
+        <div>
+          <p class="eyebrow">Agent connection</p>
+          <h2>Hosted MCP tools</h2>
+        </div>
+        <pre><code>latest_signals
+search_news
+search_knowledge
+recommend_agent_tools
+get_topic_brief
+get_context_for_task</code></pre>
+      </section>
+
+      <section id="knowledge" class="band">
+        <div>
+          <p class="eyebrow">Public-safe knowledge</p>
+          <h2>What ships in this template</h2>
+        </div>
+        <p>
+          This demo uses sanitized examples only. A private Newswiki instance should export summaries,
+          source links, topics, freshness, and confidence metadata without raw feeds or private wiki notes.
+        </p>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
