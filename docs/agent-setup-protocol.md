@@ -44,7 +44,13 @@ Default private instance:
 ~/Newswiki-private
 ```
 
-On Windows, run:
+Preferred cross-platform setup:
+
+```bash
+python scripts/agent_setup_newswiki.py --target ~/Newswiki-private
+```
+
+Windows PowerShell fallback:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/agent_setup_newswiki.ps1 -Target "$HOME\Newswiki-private"

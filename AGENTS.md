@@ -26,7 +26,13 @@ If the user asks to set up, build, install, configure, or bootstrap their own Ne
 
 Default to creating a separate private instance, not writing user data into this repo.
 
-On Windows, prefer:
+Prefer the cross-platform bootstrap:
+
+```bash
+python scripts/agent_setup_newswiki.py --target ~/Newswiki-private
+```
+
+On Windows, PowerShell fallback:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/agent_setup_newswiki.ps1 -Target "$HOME\Newswiki-private"

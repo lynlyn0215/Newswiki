@@ -83,6 +83,12 @@ For the visual map, read [docs/system-diagram.md](docs/system-diagram.md).
 - `examples/` - fake data only.
 - `newswiki.setup.json` - machine-readable setup manifest for agents.
 
+Agent bootstrap:
+
+```bash
+python scripts/agent_setup_newswiki.py --target ~/Newswiki-private
+```
+
 ## Privacy Rule
 
 This repo is public-safe. Real personal data belongs in the private instance created from templates, not in this repository.

@@ -173,6 +173,12 @@ scripts/          初始化、能力扫描、隐私扫描脚本
 newswiki.setup.json  给 AI agent 读取的机器可读搭建 manifest
 ```
 
+Agent 自动搭建入口：
+
+```bash
+python scripts/agent_setup_newswiki.py --target ~/Newswiki-private
+```
+
 ## 隐私规则
 
 公开 repo 只能放：

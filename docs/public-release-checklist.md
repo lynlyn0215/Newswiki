@@ -38,6 +38,12 @@ python -m unittest tests.test_public_export_schema service.tests.test_health ser
 Agent-native setup smoke:
 
 ```powershell
+python scripts\agent_setup_newswiki.py --target "$env:TEMP\Newswiki-private-smoke" --skip-install
+```
+
+Windows PowerShell fallback:
+
+```powershell
 powershell -ExecutionPolicy Bypass -File scripts\agent_setup_newswiki.ps1 -Target "$env:TEMP\Newswiki-private-smoke" -SkipInstall
 ```
 

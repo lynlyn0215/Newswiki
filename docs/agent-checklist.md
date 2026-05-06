@@ -13,7 +13,7 @@ Use this checklist when an AI agent sets up Newswiki for a user.
 
 ## Private Instance
 
-- [ ] Run `scripts/init_newswiki.ps1` or `scripts/agent_setup_newswiki.ps1`.
+- [ ] Run `scripts/agent_setup_newswiki.py` or the Windows PowerShell fallback `scripts/agent_setup_newswiki.ps1`.
 - [ ] Confirm private `AGENTS.md` exists.
 - [ ] Confirm `wiki/` exists.
 - [ ] Confirm `wiki/learnings.md`, `wiki/patterns.md`, `wiki/decisions.md`, and `wiki/gaps.md` exist.
