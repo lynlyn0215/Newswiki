@@ -10,11 +10,11 @@ Current scope:
 - search signals, knowledge pages, and tool cards
 - build `ContextPack` responses
 - serve authenticated `/v1/*` HTTP endpoints
+- expose read-only hosted MCP alpha tools
 - keep an in-memory usage log for alpha testing
 
 Out of scope for this slice:
 
-- remote MCP transport
 - billing
 - tenant database
 
@@ -69,3 +69,22 @@ Useful endpoints:
 - `GET /v1/topics/{topic}/brief`
 - `POST /v1/context`
 - `GET /v1/usage`
+
+## Run MCP Locally
+
+The alpha MCP adapter exposes the same read-only context tools as the REST API. For local stdio usage:
+
+```powershell
+python -m service.app.mcp_server --export-dir examples/public --api-keys local-key
+```
+
+Alpha tools:
+
+- `latest_signals(api_key, topic?, days?, limit?)`
+- `search_news(api_key, query, topic?, days?, limit?)`
+- `search_knowledge(api_key, query, topic?, limit?)`
+- `recommend_agent_tools(api_key, task, environment?, limit?)`
+- `get_topic_brief(api_key, topic, depth?)`
+- `get_context_for_task(api_key, task, topic?, token_budget?)`
+
+The `api_key` argument must match one of the configured `NEWSWIKI_API_KEYS` values. Invalid keys return a structured error instead of data.
