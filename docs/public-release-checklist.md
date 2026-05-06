@@ -6,6 +6,7 @@ Use this before making the repository public or tagging an alpha release.
 
 - README explains Newswiki as a local-first personal agent information system template.
 - README explains the hosted alpha as a product skeleton, not a live hosted service.
+- README links to the open-core positioning: self-hostable template plus hosted intelligence layer.
 - Chinese README has the same core positioning and links.
 - Core MCPs are clear: Capability MCP, Wiki MCP, Newsfeed MCP.
 - Hosted alpha path is clear: public-safe export -> REST API -> MCP adapter -> playground.

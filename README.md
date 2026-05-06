@@ -26,6 +26,8 @@ Run the full path with [docs/quickstart-hosted-alpha.md](docs/quickstart-hosted-
 
 The hosted alpha uses fake example data by default. It is a product skeleton, not a hosted service account or private data backend.
 
+For the self-hosted vs hosted-service positioning, read [docs/open-core.md](docs/open-core.md).
+
 ## Core MCPs
 
 ### Wiki MCP
