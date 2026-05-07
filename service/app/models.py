@@ -15,6 +15,9 @@ class PublicItem:
     freshness: str
     confidence: str
     kind: str
+    source_type: str
+    privacy_level: str
+    actionability: str
     extra: dict[str, Any] = field(default_factory=dict)
 
 
@@ -25,9 +28,16 @@ class ContextPack:
     signals: list[PublicItem]
     knowledge: list[PublicItem]
     tools: list[PublicItem]
+    private_memory: list[PublicItem]
+    hosted_signals: list[PublicItem]
+    curated_knowledge: list[PublicItem]
+    local_capabilities: list[PublicItem]
+    recommended_templates: list[PublicItem]
     sources: list[str]
     freshness: str
     confidence: str
+    enabled_layers: list[str]
+    data_limits: list[str]
     suggested_next_queries: list[str]
 
     def to_dict(self) -> dict[str, Any]:
@@ -37,9 +47,16 @@ class ContextPack:
             "signals": [item_to_dict(item) for item in self.signals],
             "knowledge": [item_to_dict(item) for item in self.knowledge],
             "tools": [item_to_dict(item) for item in self.tools],
+            "private_memory": [item_to_dict(item) for item in self.private_memory],
+            "hosted_signals": [item_to_dict(item) for item in self.hosted_signals],
+            "curated_knowledge": [item_to_dict(item) for item in self.curated_knowledge],
+            "local_capabilities": [item_to_dict(item) for item in self.local_capabilities],
+            "recommended_templates": [item_to_dict(item) for item in self.recommended_templates],
             "sources": self.sources,
             "freshness": self.freshness,
             "confidence": self.confidence,
+            "enabled_layers": self.enabled_layers,
+            "data_limits": self.data_limits,
             "suggested_next_queries": self.suggested_next_queries,
         }
 
@@ -55,6 +72,9 @@ def item_to_dict(item: PublicItem) -> dict[str, Any]:
         "freshness": item.freshness,
         "confidence": item.confidence,
         "kind": item.kind,
+        "source_type": item.source_type,
+        "privacy_level": item.privacy_level,
+        "actionability": item.actionability,
     }
     data.update(item.extra)
     return data

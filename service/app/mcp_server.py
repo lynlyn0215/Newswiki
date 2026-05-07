@@ -9,6 +9,7 @@ from typing import Any, Callable
 
 from mcp.server.fastmcp import FastMCP
 
+from service.app.connectors import ConnectorExportError, ConnectorRepository
 from service.app.context_pack import ContextPackBuilder
 from service.app.models import PublicItem, item_to_dict
 from service.app.repository import PublicExportError, PublicExportRepository
@@ -155,9 +156,16 @@ class HostedMCPService:
             settings = self.settings_factory()
             repository = PublicExportRepository(settings.public_export_dir)
             search = SearchService(repository)
-            builder = ContextPackBuilder(search)
+            private_memory = ConnectorRepository(settings.user_memory_dir).load("private_memory")
+            local_capabilities = ConnectorRepository(settings.local_capability_dir).load("local_capabilities")
+            builder = ContextPackBuilder(
+                search,
+                settings.layers,
+                private_memory=private_memory,
+                local_capabilities=local_capabilities,
+            )
             result = handler(search, builder)
-        except PublicExportError as exc:
+        except (ConnectorExportError, PublicExportError) as exc:
             usage_log.record(tool=tool, status="degraded")
             return {"ok": False, "error": str(exc)}
         result_count = count_result_items(result)

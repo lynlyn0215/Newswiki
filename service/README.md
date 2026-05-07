@@ -38,11 +38,20 @@ python -m pip install -r service/requirements.txt
 
 `NEWSWIKI_API_KEYS` is a comma-separated list of accepted API keys. It defaults to `dev-newswiki-key` for local development.
 
+`NEWSWIKI_ENABLED_LAYERS` is a comma-separated list of context source layers. It defaults to `newswiki_hosted,newswiki_curated,recommended_template`.
+
+`NEWSWIKI_USER_MEMORY_DIR` can point at a connector export directory containing `private_memory.json`.
+
+`NEWSWIKI_LOCAL_CAPABILITY_DIR` can point at a connector export directory containing `local_capabilities.json`.
+
 Example:
 
 ```powershell
 $env:NEWSWIKI_PUBLIC_EXPORT_DIR="C:\path\to\public-export"
 $env:NEWSWIKI_API_KEYS="local-key"
+$env:NEWSWIKI_ENABLED_LAYERS="newswiki_hosted,newswiki_curated,recommended_template,user_private,local_capability"
+$env:NEWSWIKI_USER_MEMORY_DIR="C:\path\to\connector-export"
+$env:NEWSWIKI_LOCAL_CAPABILITY_DIR="C:\path\to\connector-export"
 ```
 
 The service validates the public export before serving data. If validation fails, query endpoints return `503` instead of leaking unsafe fields.
@@ -69,6 +78,20 @@ Useful endpoints:
 - `GET /v1/topics/{topic}/brief`
 - `POST /v1/context`
 - `GET /v1/usage`
+
+## Context Layers
+
+Hosted context packs label every item by source boundary:
+
+- `newswiki_hosted`: Newswiki-hosted signals and news context.
+- `newswiki_curated`: curated public knowledge and methods.
+- `recommended_template`: workflow or tool templates that may need install/config.
+- `user_private`: user-owned private wiki memory.
+- `local_capability`: tools available on the user's own machine.
+
+The alpha service ships with hosted/curated/template public examples. User-private wiki and local-capability layers are connector contracts, not hosted defaults. Context packs include `data_limits` so agents can see when a layer is empty, disconnected, or demo-only.
+
+See [context-layer-contract.md](../docs/specs/context-layer-contract.md) for connector file shapes.
 
 ## Run MCP Locally
 

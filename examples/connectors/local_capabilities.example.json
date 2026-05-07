@@ -1,0 +1,19 @@
+{
+  "local_capabilities": [
+    {
+      "id": "capability-demo-001",
+      "title": "Local Wiki MCP",
+      "summary": "A private local MCP server that retrieves prior project memory before planning.",
+      "source_urls": [],
+      "topics": ["mcp", "wiki", "planning"],
+      "updated_at": "2026-01-02T10:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "source_type": "local_capability",
+      "privacy_level": "private",
+      "actionability": "call",
+      "tool_name": "wiki_past_knowledge",
+      "availability": "available_local"
+    }
+  ]
+}

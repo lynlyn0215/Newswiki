@@ -56,16 +56,16 @@ Use the Product-Value MCP Test prompt in [claude-code-test.md](claude-code-test.
 
 Pass criteria:
 
-- it calls Capability MCP before product recommendations
 - it calls Wiki MCP before product recommendations
 - it calls Newsfeed MCP when judging market/current signals
+- it calls Capability MCP only when the task requires tool/workflow routing, or explicitly says it is unnecessary
 - it distinguishes fresh private-instance templates from real history
 - it distinguishes demo news fixtures from real market evidence
 - it explains how MCP context changed or limited the recommendation
 
 Known useful failure signal:
 
-- If Capability MCP only returns `startup.default`, enrich the user's capability catalog with product, research, and customer-discovery skills.
+- If Capability MCP only returns `startup.default`, treat that as a weak routing signal, not as a product judgment input.
 - If Wiki MCP returns only empty control pages, seed or import durable decisions before relying on past-knowledge recommendations.
 - If Newsfeed MCP returns only demo articles, do not treat the result as market validation.
 

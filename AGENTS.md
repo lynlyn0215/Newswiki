@@ -10,11 +10,13 @@ Do not treat this repo as a user's personal data store. It contains docs, templa
 
 Before non-trivial work, query startup context in this order when the tools exist:
 
-1. Capability MCP: choose relevant skills, plugins, MCP tools, CLIs, and workflow chains.
-2. Wiki MCP: retrieve past knowledge, prior decisions, patterns, known pitfalls, and gaps.
-3. Newsfeed MCP: retrieve recent news only when the task benefits from current information.
+1. Wiki MCP: retrieve past knowledge, prior decisions, patterns, known pitfalls, and gaps.
+2. Newsfeed MCP: retrieve recent signals when current information, market context, or source freshness affects the task.
+3. Capability MCP: use only when tool routing matters, such as choosing skills, plugins, MCP tools, CLIs, automations, or workflow chains.
 
 Then plan or execute.
+
+Do not force Capability MCP into every task. If capability results are generic, irrelevant, or conflict with the task shape, say so and continue with the stronger evidence.
 
 ## User Setup Requests
 
@@ -74,4 +76,4 @@ Classify write-backs as:
 - `decision`: durable user-approved product, architecture, or workflow choice.
 - `gap`: missing coverage, uncertainty, or future research need.
 
-For Newswiki work, pay special attention to public/private data boundaries, MCP contracts, startup capability discovery, wiki memory retrieval, export validation, deployment reality, and connector/tool limitations.
+For Newswiki work, pay special attention to public/private data boundaries, MCP contracts, wiki memory retrieval, external signal quality, export validation, deployment reality, and connector/tool limitations.

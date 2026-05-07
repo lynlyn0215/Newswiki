@@ -16,6 +16,14 @@ COLLECTION_FILES = {
     "topics": "topics.example.json",
 }
 
+DEFAULT_PROVENANCE = {
+    "signals": ("newswiki_hosted", "public", "read"),
+    "knowledge_pages": ("newswiki_curated", "public", "reference"),
+    "tool_cards": ("recommended_template", "public", "install_or_configure"),
+    "briefs": ("newswiki_curated", "public", "reference"),
+    "topics": ("newswiki_curated", "public", "reference"),
+}
+
 
 class PublicExportError(RuntimeError):
     pass
@@ -69,8 +77,12 @@ def to_public_item(raw: dict[str, Any], kind: str) -> PublicItem:
         "freshness",
         "confidence",
         "public_safe",
+        "source_type",
+        "privacy_level",
+        "actionability",
     }
     extra = {key: value for key, value in raw.items() if key not in common}
+    source_type, privacy_level, actionability = DEFAULT_PROVENANCE.get(kind, ("newswiki_curated", "public", "reference"))
     return PublicItem(
         id=raw["id"],
         title=raw["title"],
@@ -81,5 +93,8 @@ def to_public_item(raw: dict[str, Any], kind: str) -> PublicItem:
         freshness=raw["freshness"],
         confidence=raw["confidence"],
         kind=kind,
+        source_type=raw.get("source_type", source_type),
+        privacy_level=raw.get("privacy_level", privacy_level),
+        actionability=raw.get("actionability", actionability),
         extra=extra,
     )

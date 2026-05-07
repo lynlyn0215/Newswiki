@@ -90,9 +90,9 @@ I want to decide whether a hosted Newswiki MCP service is worth continuing as a 
 
 Follow the Newswiki startup protocol:
 
-1. Use Capability MCP to find the relevant skill, tool, or workflow chain for this task.
-2. Use Wiki MCP to retrieve past knowledge about Newswiki, MCP, hosted service, open-core positioning, prior decisions, patterns, pitfalls, and gaps.
-3. Use Newsfeed MCP to check recent signals or source health. If the Newsfeed data is only demo data, say that clearly.
+1. Use Wiki MCP to retrieve past knowledge about Newswiki, MCP, hosted service, open-core positioning, prior decisions, patterns, pitfalls, and gaps.
+2. Use Newsfeed MCP to check recent signals or source health. If the Newsfeed data is only demo data, say that clearly.
+3. Use Capability MCP only if this task requires choosing tools, workflows, MCP setup, or local capability routing. If you skip it, say why.
 
 Then give me a product judgment:
 
@@ -101,14 +101,16 @@ Then give me a product judgment:
 - success criteria for each test
 - which MCP tools you actually called
 - how each MCP result changed your conclusion
+- whether Capability MCP was useful, skipped, or a weak/generic signal
 
 Do not answer from general knowledge alone. Do not pretend demo news is market evidence.
 ```
 
 Pass if Claude Code:
 
-- calls at least one Capability MCP tool and one Wiki MCP tool
+- calls at least one Wiki MCP tool
 - calls Newsfeed MCP or explicitly explains why current signals are unavailable
+- calls Capability MCP only when tool/workflow routing matters, or explicitly says why it was skipped
 - distinguishes empty fresh-instance data from real prior knowledge
 - distinguishes demo news from market evidence
 - changes or qualifies its recommendation based on MCP results
@@ -117,5 +119,5 @@ Fail if Claude Code:
 
 - gives a generic product strategy answer without MCP calls
 - claims the demo newsfeed is real market validation
-- ignores an empty wiki or generic capability catalog
+- treats a generic capability catalog as stronger than source evidence
 - cannot explain how MCP context affected the answer

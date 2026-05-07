@@ -1,0 +1,18 @@
+{
+  "private_memory": [
+    {
+      "id": "memory-demo-001",
+      "title": "Use public-safe exports for hosted context",
+      "summary": "The user's private system should export summaries and decisions rather than raw working files.",
+      "source_urls": [],
+      "topics": ["mcp", "privacy"],
+      "updated_at": "2026-01-02T10:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "source_type": "user_private",
+      "privacy_level": "private",
+      "actionability": "remember",
+      "memory_type": "decision"
+    }
+  ]
+}

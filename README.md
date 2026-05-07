@@ -4,13 +4,13 @@ Newswiki is a local-first personal agent information system template and hosted 
 
 中文说明见 [README.zh-CN.md](README.zh-CN.md).
 
-It helps an agent answer three questions before it starts work:
+It helps an agent answer the context questions that matter before it starts work:
 
-1. What can I use? -> Capability MCP
-2. What do I already know? -> Wiki MCP
-3. What happened recently? -> Newsfeed MCP
+1. What do I already know? -> Wiki MCP
+2. What happened recently? -> Newsfeed MCP
+3. What tools or workflows matter for this task? -> Capability MCP, on demand
 
-Most people can build a feed, a wiki, or a small website. Newswiki's core idea is the startup protocol: give the agent a clean way to query capabilities, durable memory, and recent information before choosing a plan.
+Most people can build a feed, a wiki, or a small website. Newswiki's core idea is the context protocol: give the agent a clean way to query durable memory and recent external signals before choosing a plan. Capability routing is useful when the task is about tools, workflows, MCP setup, or local availability; it is not forced into every task.
 
 ## Hosted Alpha
 
@@ -43,7 +43,7 @@ References:
 
 The Capability MCP reads a local capability catalog generated from skills, MCP servers, CLI tools, and other workstation metadata. It lets the agent ask which capability chain fits the task before doing work.
 
-This sits beside Wiki MCP. Both are startup context, not application features.
+This is an optional routing layer. Use it when choosing tools, workflows, MCP servers, CLIs, or automations. Do not treat a generic capability result as stronger than project memory, source evidence, or current facts.
 
 ### Newsfeed MCP
 

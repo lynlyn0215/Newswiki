@@ -113,6 +113,50 @@ class RoutesTest(unittest.TestCase):
         self.assertEqual(response.status_code, 503)
         self.assertFalse(response.json()["ok"])
 
+    def test_invalid_connector_export_returns_503(self) -> None:
+        original_memory_dir = os.environ.get("NEWSWIKI_USER_MEMORY_DIR")
+        original_layers = os.environ.get("NEWSWIKI_ENABLED_LAYERS")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "private_memory.json").write_text(
+                json.dumps(
+                    {
+                        "private_memory": [
+                            {
+                                "id": "bad-memory",
+                                "title": "Bad memory",
+                                "summary": "Bad memory",
+                                "topics": ["mcp"],
+                                "updated_at": "2026-01-02T10:00:00Z",
+                                "freshness": "weekly",
+                                "confidence": "high",
+                                "private_notes": "do not serve",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            os.environ["NEWSWIKI_USER_MEMORY_DIR"] = str(root)
+            os.environ["NEWSWIKI_ENABLED_LAYERS"] = "newswiki_hosted,user_private"
+            response = self.client.post(
+                "/v1/context",
+                json={"task": "design hosted MCP service", "topic": "mcp"},
+                headers={"x-api-key": AUTH_VALUE},
+            )
+
+        if original_memory_dir is None:
+            os.environ.pop("NEWSWIKI_USER_MEMORY_DIR", None)
+        else:
+            os.environ["NEWSWIKI_USER_MEMORY_DIR"] = original_memory_dir
+        if original_layers is None:
+            os.environ.pop("NEWSWIKI_ENABLED_LAYERS", None)
+        else:
+            os.environ["NEWSWIKI_ENABLED_LAYERS"] = original_layers
+
+        self.assertEqual(response.status_code, 503)
+        self.assertFalse(response.json()["ok"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -49,6 +49,29 @@
             <option value="coding-agents">coding-agents</option>
             <option value="ai-devtools">ai-devtools</option>
           </select>
+          <fieldset>
+            <legend>Context layers</legend>
+            <label class="check-row">
+              <input type="checkbox" data-layer="newswiki_hosted" checked />
+              <span>Newswiki hosted signals</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" data-layer="newswiki_curated" checked />
+              <span>Curated knowledge</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" data-layer="recommended_template" checked />
+              <span>Recommended templates</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" data-layer="user_private" />
+              <span>User private wiki</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" data-layer="local_capability" />
+              <span>Local capabilities</span>
+            </label>
+          </fieldset>
           <button id="build" type="button">Build context pack</button>
         </div>
 
@@ -56,6 +79,7 @@
           <div class="panel-header">
             <p class="eyebrow">Context pack</p>
             <h2 id="answer">Ready for a task.</h2>
+            <p class="meta-line">Layers: <span id="enabled-layers">loading</span></p>
           </div>
           <div class="columns">
             <section>
@@ -69,6 +93,18 @@
             <section>
               <h3>Tool route</h3>
               <ul id="tools"></ul>
+            </section>
+            <section>
+              <h3>Private memory</h3>
+              <ul id="private-memory"></ul>
+            </section>
+            <section>
+              <h3>Local capabilities</h3>
+              <ul id="local-capabilities"></ul>
+            </section>
+            <section>
+              <h3>Data limits</h3>
+              <ul id="data-limits"></ul>
             </section>
           </div>
           <div class="sources">

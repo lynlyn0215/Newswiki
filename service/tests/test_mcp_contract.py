@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from service.app.mcp_server import HostedMCPService, dumps, make_app
-from service.app.settings import Settings
+from service.app.settings import LayerConfig, Settings
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -79,9 +79,92 @@ class MCPContractTest(unittest.TestCase):
             "sources",
             "freshness",
             "confidence",
+            "enabled_layers",
+            "data_limits",
             "suggested_next_queries",
         ]:
             self.assertIn(key, result)
+        self.assertEqual(result["hosted_signals"][0]["source_type"], "newswiki_hosted")
+        self.assertTrue(result["curated_knowledge"])
+        self.assertTrue(result["recommended_templates"])
+
+    def test_get_context_for_task_respects_layer_config(self) -> None:
+        settings = Settings(
+            public_export_dir=ROOT / "examples" / "public",
+            api_keys=(AUTH_VALUE,),
+            layers=LayerConfig(enabled=("newswiki_hosted",)),
+        )
+        service = HostedMCPService(settings_factory=lambda: settings)
+
+        result = service.get_context_for_task(api_key=AUTH_VALUE, task="design hosted MCP service", topic="mcp")
+
+        self.assertTrue(result["ok"])
+        self.assertTrue(result["hosted_signals"])
+        self.assertEqual(result["curated_knowledge"], [])
+        self.assertEqual(result["recommended_templates"], [])
+        self.assertEqual(result["enabled_layers"], ["newswiki_hosted"])
+
+    def test_get_context_for_task_includes_connector_layers(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "private_memory.json").write_text(
+                json.dumps(
+                    {
+                        "private_memory": [
+                            {
+                                "id": "memory-1",
+                                "title": "Hosted MCP decision",
+                                "summary": "Use private wiki memory as the default user layer.",
+                                "topics": ["mcp"],
+                                "updated_at": "2026-01-03T10:00:00Z",
+                                "freshness": "weekly",
+                                "confidence": "high",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "local_capabilities.json").write_text(
+                json.dumps(
+                    {
+                        "local_capabilities": [
+                            {
+                                "id": "capability-1",
+                                "title": "Wiki MCP",
+                                "summary": "Call wiki_past_knowledge before MCP product planning.",
+                                "topics": ["mcp"],
+                                "updated_at": "2026-01-03T10:00:00Z",
+                                "freshness": "weekly",
+                                "confidence": "high",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            settings = Settings(
+                public_export_dir=ROOT / "examples" / "public",
+                api_keys=(AUTH_VALUE,),
+                layers=LayerConfig(
+                    enabled=(
+                        "newswiki_hosted",
+                        "newswiki_curated",
+                        "recommended_template",
+                        "user_private",
+                        "local_capability",
+                    )
+                ),
+                user_memory_dir=root,
+                local_capability_dir=root,
+            )
+            service = HostedMCPService(settings_factory=lambda: settings)
+
+            result = service.get_context_for_task(api_key=AUTH_VALUE, task="design hosted MCP service", topic="mcp")
+
+        self.assertTrue(result["ok"])
+        self.assertEqual(result["private_memory"][0]["source_type"], "user_private")
+        self.assertEqual(result["local_capabilities"][0]["source_type"], "local_capability")
 
     def test_invalid_public_export_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

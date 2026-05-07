@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, Query
 from pydantic import BaseModel
 
 from service.app.auth import require_api_key
+from service.app.connectors import ConnectorRepository
 from service.app.context_pack import ContextPackBuilder
 from service.app.models import item_to_dict
 from service.app.repository import PublicExportRepository
@@ -31,7 +32,15 @@ def services() -> tuple[PublicExportRepository, SearchService, ContextPackBuilde
     settings = Settings.from_env()
     repository = PublicExportRepository(settings.public_export_dir)
     search = SearchService(repository)
-    return repository, search, ContextPackBuilder(search)
+    private_memory = ConnectorRepository(settings.user_memory_dir).load("private_memory")
+    local_capabilities = ConnectorRepository(settings.local_capability_dir).load("local_capabilities")
+    builder = ContextPackBuilder(
+        search,
+        settings.layers,
+        private_memory=private_memory,
+        local_capabilities=local_capabilities,
+    )
+    return repository, search, builder
 
 
 @router.get("/health")

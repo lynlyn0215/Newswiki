@@ -66,6 +66,18 @@ The setup script:
 - runs the hosted MCP smoke test
 - writes a setup report inside the private instance
 
+## Runtime Context Protocol
+
+After setup, the user's agent should not force every MCP into every task.
+
+Use this order:
+
+1. Wiki MCP for prior decisions, reusable patterns, known pitfalls, and gaps.
+2. Newsfeed MCP when recent external information, market context, or source freshness matters.
+3. Capability MCP only when the task requires tool choice, workflow routing, MCP setup, CLI availability, or automation selection.
+
+If Capability MCP returns a generic or irrelevant chain, report that limitation and continue from stronger evidence.
+
 ## Manual Setup Path
 
 If the setup script cannot run, perform these steps:

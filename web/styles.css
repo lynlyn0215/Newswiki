@@ -128,6 +128,13 @@ main {
   margin-bottom: 18px;
 }
 
+.meta-line {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
 .panel h2,
 .band h2 {
   font-size: 24px;
@@ -140,6 +147,36 @@ label {
   color: var(--muted);
   font-size: 13px;
   font-weight: 700;
+}
+
+fieldset {
+  margin: 18px 0 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+legend {
+  padding: 0 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0 0;
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.check-row input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--blue);
 }
 
 textarea,
@@ -209,6 +246,18 @@ a:focus-visible {
   border-color: var(--amber);
 }
 
+.columns section:nth-child(4) {
+  border-color: var(--rose);
+}
+
+.columns section:nth-child(5) {
+  border-color: var(--green);
+}
+
+.columns section:nth-child(6) {
+  border-color: var(--muted);
+}
+
 h3 {
   margin: 0 0 10px;
   font-size: 14px;
@@ -231,6 +280,18 @@ li {
 li strong {
   display: block;
   color: var(--ink);
+}
+
+.badge {
+  display: inline-block;
+  margin: 3px 0 5px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px 7px;
+  background: #fbfcfd;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
 }
 
 .sources {
