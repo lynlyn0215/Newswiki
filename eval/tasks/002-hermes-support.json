@@ -1,0 +1,37 @@
+{
+  "id": "002-hermes-support",
+  "task": "Should a coding-agent context product support Hermes Agent in v1?",
+  "topic": "ai-agents",
+  "needs_fresh_facts": true,
+  "expected_context": [
+    "Hermes capabilities",
+    "MCP client support",
+    "Newswiki-Hermes complementarity"
+  ],
+  "success_signals": [
+    "clear yes/no/ later recommendation",
+    "distinguishes consumer from write-back integration"
+  ],
+  "expected_context_checks": [
+    {
+      "label": "Hermes capabilities",
+      "all_terms": [
+        "hermes",
+        "memory"
+      ],
+      "fields_present": [
+        "source_claim"
+      ]
+    },
+    {
+      "label": "Newswiki-Hermes complementarity",
+      "all_terms": [
+        "hermes",
+        "complement"
+      ],
+      "fields_present": [
+        "newswiki_interpretation"
+      ]
+    }
+  ]
+}

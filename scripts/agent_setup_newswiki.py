@@ -84,8 +84,8 @@ Start:
 2. Edit config/pipeline.example.yaml.
 3. Refresh capabilities when your local tools change:
    python "{REPO / 'scripts/build_capabilities.py'}" --output "{target / 'capabilities.json'}"
-4. Configure the three MCPs from config/mcp.example.toml.
-5. Ask your agent to follow AGENTS.md.
+4. Configure the Newswiki MCP/input layers from config/mcp.example.toml.
+5. Ask your agent to follow AGENTS.md and prefer get_context_for_task when available.
 """
     (target / "README.md").write_text(readme, encoding="utf-8")
 

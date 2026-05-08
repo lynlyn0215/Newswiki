@@ -33,7 +33,7 @@ class MCPContractTest(unittest.TestCase):
         result = self.service.latest_signals(api_key=AUTH_VALUE, topic="mcp", limit=5)
 
         self.assertTrue(result["ok"])
-        self.assertEqual(result["signals"][0]["id"], "signal-demo-001")
+        self.assertTrue(result["signals"][0]["id"].startswith("signal-2026-"))
         self.assertIn("source_urls", result["signals"][0])
 
     def test_search_news_handles_empty_results(self) -> None:
@@ -73,6 +73,14 @@ class MCPContractTest(unittest.TestCase):
         for key in [
             "task",
             "answer",
+            "brief_type",
+            "needs_fresh_facts",
+            "retrieval_decision",
+            "relevant_signals",
+            "relevant_knowledge",
+            "stale_assumption_warnings",
+            "what_not_to_assume",
+            "suggested_verification_steps",
             "signals",
             "knowledge",
             "tools",
@@ -85,8 +93,10 @@ class MCPContractTest(unittest.TestCase):
         ]:
             self.assertIn(key, result)
         self.assertEqual(result["hosted_signals"][0]["source_type"], "newswiki_hosted")
+        self.assertEqual(result["brief_type"], "pre_plan")
         self.assertTrue(result["curated_knowledge"])
-        self.assertTrue(result["recommended_templates"])
+        self.assertEqual(result["recommended_templates"], [])
+        self.assertEqual(result["retrieval_decision"]["capability_routing"]["status"], "skipped")
 
     def test_get_context_for_task_respects_layer_config(self) -> None:
         settings = Settings(
@@ -103,6 +113,16 @@ class MCPContractTest(unittest.TestCase):
         self.assertEqual(result["curated_knowledge"], [])
         self.assertEqual(result["recommended_templates"], [])
         self.assertEqual(result["enabled_layers"], ["newswiki_hosted"])
+
+    def test_hosted_mode_masks_private_layers(self) -> None:
+        settings = Settings(
+            public_export_dir=ROOT / "examples" / "public",
+            api_keys=(AUTH_VALUE,),
+            layers=LayerConfig(enabled=("newswiki_hosted", "user_private", "local_capability")),
+        )
+
+        self.assertEqual(settings.layers.enabled, ("newswiki_hosted",))
+        self.assertFalse(settings.allows_private_connectors())
 
     def test_get_context_for_task_includes_connector_layers(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -131,8 +151,8 @@ class MCPContractTest(unittest.TestCase):
                         "local_capabilities": [
                             {
                                 "id": "capability-1",
-                                "title": "Wiki MCP",
-                                "summary": "Call wiki_past_knowledge before MCP product planning.",
+                                "title": "Wiki MCP tool",
+                                "summary": "Tool route for wiki_past_knowledge before MCP product planning.",
                                 "topics": ["mcp"],
                                 "updated_at": "2026-01-03T10:00:00Z",
                                 "freshness": "weekly",
@@ -157,14 +177,40 @@ class MCPContractTest(unittest.TestCase):
                 ),
                 user_memory_dir=root,
                 local_capability_dir=root,
+                context_mode="local",
             )
             service = HostedMCPService(settings_factory=lambda: settings)
 
-            result = service.get_context_for_task(api_key=AUTH_VALUE, task="design hosted MCP service", topic="mcp")
+            result = service.get_context_for_task(
+                api_key=AUTH_VALUE,
+                task="Which tool should I use to design hosted MCP service?",
+                topic="mcp",
+            )
 
         self.assertTrue(result["ok"])
         self.assertEqual(result["private_memory"][0]["source_type"], "user_private")
         self.assertEqual(result["local_capabilities"][0]["source_type"], "local_capability")
+
+    def test_public_mcp_tools_do_not_load_invalid_connectors(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "private_memory.json").write_text(
+                json.dumps({"private_memory": [{"id": "bad-memory", "private_notes": "do not serve"}]}),
+                encoding="utf-8",
+            )
+            settings = Settings(
+                public_export_dir=ROOT / "examples" / "public",
+                api_keys=(AUTH_VALUE,),
+                layers=LayerConfig(enabled=("newswiki_hosted", "user_private")),
+                user_memory_dir=root,
+                context_mode="local",
+            )
+            service = HostedMCPService(settings_factory=lambda: settings)
+
+            result = service.latest_signals(api_key=AUTH_VALUE, topic="mcp")
+
+        self.assertTrue(result["ok"])
+        self.assertTrue(result["signals"])
 
     def test_invalid_public_export_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

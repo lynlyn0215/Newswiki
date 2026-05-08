@@ -1,6 +1,6 @@
 # Pipeline Skeleton
 
-The pipeline is optional. The MCP startup protocol is the core.
+The pipeline is optional. The source-backed pre-plan brief is the core.
 
 Use the pipeline when you want automated collection and processing:
 

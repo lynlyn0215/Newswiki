@@ -1,14 +1,14 @@
-# The Three Core MCPs
+# Newswiki Input MCPs
 
-Newswiki is MCP-first.
+Newswiki v1 is not "three MCPs queried before every task."
 
-The three core MCPs sit at the same layer. They are all queried before important work starts.
+The core product surface is the read-only `get_context_for_task` pre-plan brief. Wiki, Capability, and Newsfeed MCPs are input layers that can feed that brief when the task calls for them.
 
 ## Capability MCP
 
-Question: what can this agent use?
+Question: does this task need local tool or workflow routing?
 
-It lists and recommends:
+Use it when the task asks to choose, install, configure, or route:
 
 - skills
 - plugins
@@ -17,33 +17,27 @@ It lists and recommends:
 - automations
 - project workflows
 
-Typical use:
-
-```text
-Task: publish a new research brief
--> Capability MCP returns: wiki memory, newsfeed query, web export, deployment checklist
-```
+Do not call it just because a product-strategy task mentions "MCP" or "skill."
 
 ## Wiki MCP
 
-Question: what do we already know?
+Question: what durable project or domain knowledge matters?
 
-It reads and updates the private Knowledge Wiki:
+It can read private Knowledge Wiki summaries:
 
 - decisions
 - patterns
 - learnings
 - gaps
 - topic pages
-- recent changes
 
-This is the durable memory layer. It is inspired by Karpathy's LLM Wiki pattern, with MCP tools added for agent startup.
+In v1 hosted mode this is not a private write-back service. Private wiki connector layers are for local/self-hosted mode.
 
 ## Newsfeed MCP
 
-Question: what happened recently?
+Question: what current external signal may change the answer?
 
-It exposes:
+It can expose:
 
 - latest articles
 - source health
@@ -51,16 +45,16 @@ It exposes:
 - wiki candidates
 - run reports
 
-This MCP is read-only by default. It gives the agent current context without dumping raw news data into the prompt.
+It should remain read-only by default and should return source-backed summaries, not raw news dumps.
 
-## Startup Order
+## Retrieval Order
 
 ```text
-Capability MCP
-  -> Wiki MCP
-  -> Newsfeed MCP when current information matters
-  -> plan/work
-  -> optional Wiki MCP write-back
+task
+  -> decide whether external signals are needed
+  -> retrieve durable knowledge when project context matters
+  -> retrieve capability routing only for tool/setup tasks
+  -> return one pre-plan brief with sources, freshness, confidence, data limits, and retrieval decisions
 ```
 
-This is the core product. Collection, LLM processing, NotebookLM, search connectors, browser automation, and web publishing are replaceable modules.
+Collection, LLM processing, NotebookLM, search connectors, browser automation, and web publishing are replaceable modules.

@@ -52,15 +52,19 @@ python .\scripts\build_capabilities.py `
   --mcp-config "$HOME\.codex\config.toml"
 ```
 
-## 5. Configure MCPs
+## 5. Configure the Pre-Plan Brief MCP
 
 Start with [templates/config/mcp.example.toml](../templates/config/mcp.example.toml).
 
-Configure:
+Primary agent-facing entry:
 
-- Wiki MCP
-- Capability MCP
-- Newsfeed MCP
+- `get_context_for_task`
+
+Optional input/support layers:
+
+- Wiki MCP: durable memory when prior decisions or project memory matter.
+- Newsfeed MCP: current external signals when fresh facts, market movement, or platform changes matter.
+- Capability MCP: setup, tool choice, local availability, commands, or workflow routing only.
 
 ## 6. Configure Sources
 
@@ -70,7 +74,11 @@ Use fake examples first. Add private sources only inside your private instance.
 
 ## 7. Agent Startup
 
-Add the private instance `AGENTS.md` rules to your agent workspace. The agent should query Capability MCP, Wiki MCP, and Newsfeed MCP before non-trivial work.
+Add the private instance `AGENTS.md` rules to your agent workspace. The agent should build a pre-plan brief before non-trivial work and query only the layers that fit the task:
+
+- external signals when current facts or platform changes matter
+- wiki/durable knowledge when prior decisions or project memory matter
+- capability routing only for setup, tool choice, local availability, or workflow routing
 
 ## 8. Optional Web UI
 

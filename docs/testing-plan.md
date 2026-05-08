@@ -71,7 +71,7 @@ Known useful failure signal:
 
 ### 4. Core Local MCP Client Test
 
-Goal: verify the three local Newswiki MCP servers can be used by a client through stdio.
+Goal: verify the optional local input-layer MCP servers can be used by a client through stdio.
 
 Command:
 
@@ -85,7 +85,7 @@ Pass criteria:
 - Capability MCP lists tools and `get_skill_chain` returns a chain.
 - Newsfeed MCP lists tools and `latest_articles` returns demo or private articles.
 
-### 5. MCP Product Quality Test
+### 5. Pre-Plan Brief Product Quality Test
 
 Goal: verify `get_context_for_task` is useful as a product surface.
 
@@ -106,9 +106,11 @@ Score each context pack:
 
 - recent signals present
 - durable knowledge present
-- tool recommendations present
+- tool recommendations present only when capability routing is relevant
 - source links present
 - freshness and confidence present
+- retrieval decisions explain queried/skipped layers
+- data limits prevent overclaiming
 - answer helps the agent plan the next step
 
 ### 6. Privacy Release Test
@@ -168,5 +170,5 @@ Before public release, pass:
 - Claude Code product-value MCP test
 - Core local MCP client test
 - Privacy release test
-- MCP product quality test with at least 7 of 10 useful context packs
+- Pre-plan brief product quality test with at least 7 of 10 useful context packs
 - Manual README/open-core positioning review

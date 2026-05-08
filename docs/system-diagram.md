@@ -1,60 +1,59 @@
 # System Diagram
 
-Newswiki is a local-first agent information system.
+Newswiki is a source-backed pre-plan context system for coding agents.
 
 ```mermaid
 flowchart TB
-    Task["User task"] --> Startup["Agent startup protocol"]
+    Task["User task"] --> Context["get_context_for_task"]
 
-    Startup --> CapMCP["Capability MCP"]
-    Startup --> WikiMCP["Wiki MCP"]
-    Startup --> NewsMCP["Newsfeed MCP"]
+    Context --> Decision["Retrieval decision"]
+    Decision --> SignalsGate["Need current external signals?"]
+    Decision --> WikiGate["Need durable knowledge?"]
+    Decision --> ToolsGate["Need capability routing?"]
 
-    CapMCP --> CapCatalog["capabilities.json"]
-    CapCatalog --> Skills["Skills"]
-    CapCatalog --> Plugins["Plugins"]
-    CapCatalog --> MCPs["MCP servers"]
-    CapCatalog --> CLIs["CLI tools"]
-    CapCatalog --> Automations["Automations"]
+    SignalsGate --> Signals["Public-safe external signals"]
+    WikiGate --> Knowledge["Curated durable knowledge"]
+    ToolsGate --> ToolCards["Recommended templates / tool cards"]
 
-    WikiMCP --> Wiki["Private Knowledge Wiki"]
-    Wiki --> Decisions["Decisions"]
-    Wiki --> Patterns["Patterns"]
-    Wiki --> Learnings["Learnings"]
-    Wiki --> Gaps["Gaps"]
-    Wiki --> Topics["Topic pages"]
+    Signals --> Brief["Pre-plan brief"]
+    Knowledge --> Brief
+    ToolCards --> Brief
 
-    NewsMCP --> NewsStore["Recent News Store"]
-    NewsStore --> Articles["Articles"]
-    NewsStore --> SourceHealth["Source health"]
-    NewsStore --> Trends["Trend summaries"]
-    NewsStore --> Candidates["Wiki candidates"]
+    Brief --> Agent["Agent plan/work"]
+    Brief --> Limits["Sources, freshness, confidence, data limits"]
 
     Sources["Sources"] --> Collect["Collectors"]
-    Collect --> Process["Process / summarize / translate"]
-    Process --> NewsStore
-    Process --> Candidates
+    Collect --> Process["Classify / summarize / translate"]
+    Process --> PublicExport["Validated public export"]
+    PublicExport --> Signals
 
-    Candidates --> OptionalBridge["Optional NotebookLM bridge"]
-    OptionalBridge --> Wiki
+    PrivateWiki["Private wiki memory"] --> LocalConnector["Local connector export"]
+    LocalCapabilities["Local capability catalog"] --> LocalConnector
+    LocalConnector --> Context
 
-    NewsStore --> OptionalWeb["Optional Web UI"]
+    Agent --> OptionalWriteBack["Optional local durable write-back"]
+    OptionalWriteBack --> PrivateWiki
+
+    PublicExport --> OptionalWeb["Optional Web UI"]
     OptionalWeb --> Localhost["localhost"]
     OptionalWeb --> Vercel["Vercel"]
-
-    CapMCP --> Work["Agent plan/work"]
-    WikiMCP --> Work
-    NewsMCP --> Work
-    Work --> WriteBack["Optional durable write-back"]
-    WriteBack --> WikiMCP
 ```
 
 ## What Is Core
 
-- Capability MCP
-- Wiki MCP
-- Newsfeed MCP
-- startup protocol
+- `get_context_for_task`
+- source-backed pre-plan brief
+- retrieval decision metadata
+- public-safe export validation
+- freshness, confidence, and data-limit disclosure
+
+## What Is Input Layer
+
+- Newsfeed/current signal exports
+- curated public knowledge
+- private wiki connector exports in local mode
+- local capability connector exports in local mode
+- recommended tool/template cards
 
 ## What Is Replaceable
 
@@ -69,8 +68,11 @@ flowchart TB
 ## Privacy Boundary
 
 ```text
-Public repo:
-  docs, templates, fake examples, skeleton code
+Hosted/default mode:
+  validated public-safe exports only
+
+Local/self-hosted mode:
+  optional private wiki and local capability connector exports
 
 Private instance:
   real wiki, real sources, real news, sessions, reports, state, databases

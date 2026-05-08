@@ -1,76 +1,84 @@
 # Architecture
 
-Newswiki is an agent startup context system.
+Newswiki is a source-backed pre-plan context system for coding agents.
 
-The core loop:
+The v1 core loop:
 
 ```text
 User task
-  -> Capability MCP: what tools/skills should the agent use?
-  -> Wiki MCP: what prior knowledge should affect this work?
-  -> Newsfeed MCP: what recent information is relevant?
+  -> get_context_for_task
+      -> decide whether current external signals are needed
+      -> retrieve durable knowledge when project/domain context matters
+      -> retrieve capability routing only for setup/tool/workflow tasks
+      -> return a pre-plan brief with sources, freshness, confidence, data limits, and retrieval decisions
   -> Agent plan/work
-  -> Optional write-back to wiki when durable learning emerges
 ```
 
-## Core MCP Layer
+## Core Service Layer
 
-### Capability MCP
+The hosted alpha service reads only validated public-safe exports by default.
 
-Scans the local agent workstation:
+Primary surface:
 
-- skills
-- plugins
-- MCP servers
-- CLI tools
-- automations
-- project workflows
+- `get_context_for_task(task, topic?, token_budget?)`
 
-It answers:
+Support/debug retrieval surfaces may remain available:
 
-- `recommend_capabilities(task)`
-- `get_skill_chain(task)`
-- `list_capabilities()`
+- latest signals
+- news search
+- knowledge search
+- tool recommendations
+- topic brief
 
-### Wiki MCP
+These support tools are not the v1 success surface. V1 is judged by whether the pre-plan brief improves agent answers.
 
-Exposes a private Markdown wiki:
+## Input Layers
 
-- `wiki_search(query)`
-- `wiki_past_knowledge(task)`
-- `wiki_write_learning(kind, title, content, links)`
-- `wiki_recent_changes(days)`
+### External Signals
 
-The wiki keeps durable decisions, patterns, learnings, gaps, and topic pages.
+Signals are source-backed public context about AI agents, MCP, devtools, model releases, and related platform changes.
 
-### Newsfeed MCP
+Every real signal should separate:
 
-Exposes recent information:
+- source claim
+- Newswiki interpretation
+- decision impact
+- entities
+- freshness/staleness
+- data limits
 
-- latest articles
-- source health
-- trend summaries
-- wiki candidates
-- run reports
+### Durable Knowledge
 
-It is read-only by default.
+Curated knowledge can include public product contracts, architecture patterns, and evaluation gates.
 
-## Optional Pipeline Layer
+Internal Newswiki docs are durable context. They are not external market evidence.
 
-Collectors gather candidate items from RSS, URLs, manual inboxes, browser automation, or search connectors.
+Private wiki memory is available only in local/self-hosted mode.
 
-Processors classify, summarize, translate, and decide which outputs each item deserves.
+### Capability Routing
 
-Storage can be SQLite, JSON files, Markdown, or a remote database. The template uses simple local files and SQLite-compatible schemas.
+Capability routing is conditional. It should run only when the task asks to choose, install, configure, or route tools, CLIs, MCP servers, skills, or workflows.
 
-## Optional Knowledge Bridge
+A product-strategy task mentioning "MCP" or "skill" is not automatically a capability-routing task.
 
-A NotebookLM bridge can evaluate long articles and prepare accepted wiki pages. It is optional and provider-specific.
+## Hosted vs Local Mode
 
-The public template documents this bridge but does not include sessions, browser profiles, state files, or real results.
+Default hosted mode:
 
-## Optional Web Layer
+```text
+NEWSWIKI_CONTEXT_MODE=hosted
+```
 
-The `web/` folder is a reading interface skeleton. It can run locally or deploy to Vercel.
+Hosted mode loads public exports only.
 
-The web layer is not the product. It is one possible output surface.
+Local/self-hosted mode:
+
+```text
+NEWSWIKI_CONTEXT_MODE=local
+```
+
+Local mode may load optional connector exports such as private memory and local capability catalogs.
+
+## Deferred
+
+Write-back, private hosted tenant storage, billing, admin UI, and cross-agent adapter generation are deferred until the pre-plan brief proves value through evaluation.

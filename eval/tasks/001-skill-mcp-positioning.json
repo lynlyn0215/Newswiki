@@ -1,0 +1,36 @@
+{
+  "id": "001-skill-mcp-positioning",
+  "task": "Should Newswiki keep Skill MCP as a core product feature after Claude and Hermes added stronger native skill/memory systems?",
+  "topic": "ai-agents",
+  "needs_fresh_facts": true,
+  "expected_context": [
+    "recent platform updates",
+    "prior Newswiki positioning",
+    "stale-assumption warnings"
+  ],
+  "success_signals": [
+    "recommendation changes based on platform evidence",
+    "generic skill indexing is downgraded or justified"
+  ],
+  "expected_context_checks": [
+    {
+      "label": "native skill/memory pressure",
+      "all_terms": [
+        "native",
+        "skill"
+      ],
+      "fields_present": [
+        "decision_impact"
+      ]
+    },
+    {
+      "label": "pre-plan brief positioning",
+      "all_terms": [
+        "brief"
+      ],
+      "fields_present": [
+        "decision_impact"
+      ]
+    }
+  ]
+}

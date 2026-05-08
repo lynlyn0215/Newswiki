@@ -1,0 +1,141 @@
+{
+  "knowledge_pages": [
+    {
+      "id": "knowledge-public-export-boundary",
+      "title": "Hosted MCP services need a public-safe export boundary",
+      "summary": "Newswiki hosted endpoints should read only validated public exports instead of private working folders, raw article stores, or local wiki notes; self-hosted users trade maintenance for stronger local privacy control.",
+      "source_urls": [
+        "https://github.com/lynlyn0215/Newswiki/blob/main/docs/specs/public-export-schema.md"
+      ],
+      "topics": [
+        "mcp",
+        "privacy",
+        "agent-infrastructure",
+        "hosted-context"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "slug": "public-safe-export-boundary",
+      "kind": "architecture-pattern",
+      "source_type": "newswiki_curated",
+      "privacy_level": "public",
+      "actionability": "reference",
+      "why_it_matters": "The public-safe export is the trust boundary that lets Newswiki serve hosted context without leaking private feed, wiki, or runtime data, while self-hosted deployments carry more maintenance tradeoffs.",
+      "affected_tasks": [
+        "hosted-alpha-design",
+        "privacy-review",
+        "public-export-validation"
+      ],
+      "decision_impact": "Keep hosted service reads constrained to validated exports until write-back and private tenant isolation are proven.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "data_limits": [
+        "Internal Newswiki durable context; not external market evidence."
+      ],
+      "key_points": [
+        "Hosted MCP and REST endpoints read public exports, not private source folders.",
+        "Self-hosted users keep more control but accept maintenance tradeoffs.",
+        "Validation fails closed when forbidden fields or private path markers appear.",
+        "Context items should expose source URLs, freshness, confidence, and data limits."
+      ],
+      "related_tools": [
+        "mcp",
+        "rest-api",
+        "validator"
+      ]
+    },
+    {
+      "id": "knowledge-pre-plan-brief-contract",
+      "title": "Newswiki v1 centers on a pre-plan brief contract",
+      "summary": "The flagship v1 MCP tool returns a source-backed pre-plan brief with retrieval decisions, relevant signals, data limits, and verification steps.",
+      "source_urls": [
+        "https://github.com/lynlyn0215/Newswiki/blob/main/docs/specs/mcp-contract.md"
+      ],
+      "topics": [
+        "mcp",
+        "agent-context",
+        "pre-plan-brief",
+        "product-strategy"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "slug": "pre-plan-brief-contract",
+      "kind": "product-contract",
+      "source_type": "newswiki_curated",
+      "privacy_level": "public",
+      "actionability": "reference",
+      "why_it_matters": "A brief-shaped response is easier for agents to consume than raw search results and makes source-backed judgment testable.",
+      "affected_tasks": [
+        "agent-eval-design",
+        "mcp-contract-review",
+        "product-positioning"
+      ],
+      "decision_impact": "Prioritize `get_context_for_task` quality before adding more tools or UI surfaces.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "data_limits": [
+        "Internal Newswiki product contract; not external market evidence."
+      ],
+      "key_points": [
+        "Return retrieval decisions and skipped layers.",
+        "Expose stale assumption warnings and data limits.",
+        "Keep legacy aliases only for compatibility."
+      ],
+      "related_tools": [
+        "get_context_for_task",
+        "context-pack",
+        "mcp"
+      ]
+    },
+    {
+      "id": "knowledge-evaluation-gate",
+      "title": "Newswiki product work is gated by A/B evaluation",
+      "summary": "Newswiki should continue productization only if source-backed briefs improve agent answers across the benchmark task set. It also tracks customer evidence gaps and signal quality gaps before further productization.",
+      "source_urls": [
+        "https://github.com/lynlyn0215/Newswiki/blob/main/eval/rubric.md"
+      ],
+      "topics": [
+        "evaluation",
+        "product-strategy",
+        "agent-context"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "slug": "evaluation-gate",
+      "kind": "decision-gate",
+      "source_type": "newswiki_curated",
+      "privacy_level": "public",
+      "actionability": "reference",
+      "why_it_matters": "Without measured improvement, Newswiki risks building infrastructure that native agent platforms will commoditize.",
+      "affected_tasks": [
+        "roadmap-prioritization",
+        "hosted-alpha-readiness",
+        "product-pivot"
+      ],
+      "decision_impact": "Run manual A/B eval before building write-back, adapters, billing, or a control plane.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "data_limits": [
+        "Internal Newswiki evaluation gate; not external market evidence."
+      ],
+      "key_points": [
+        "Score baseline and Newswiki-context answers separately.",
+        "A task improves when score increases by at least three points or avoids a material stale assumption.",
+        "Continue only if at least seven of ten benchmark tasks improve.",
+        "Track customer evidence gaps before productizing hosted MCP service.",
+        "Track signal quality gaps before treating the curated index as proof."
+      ],
+      "related_tools": [
+        "eval",
+        "rubric",
+        "manual-ab-protocol"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "007-stale-assumptions",
+  "task": "What stale assumptions exist in the current Newswiki transformation plan?",
+  "topic": "product-strategy",
+  "needs_fresh_facts": true,
+  "expected_context": [
+    "current plan",
+    "recent platform changes",
+    "known product risks"
+  ],
+  "success_signals": [
+    "identifies assumptions weakened by new facts",
+    "separates speculation from evidence"
+  ],
+  "expected_context_checks": [
+    {
+      "label": "current plan context",
+      "all_terms": [
+        "brief",
+        "contract"
+      ],
+      "fields_present": [
+        "data_limits"
+      ]
+    },
+    {
+      "label": "recent platform changes",
+      "all_terms": [
+        "codex"
+      ],
+      "fields_present": [
+        "source_published_at"
+      ]
+    }
+  ]
+}

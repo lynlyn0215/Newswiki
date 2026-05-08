@@ -34,8 +34,9 @@ class RoutesTest(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         data = response.json()
-        self.assertEqual(len(data["signals"]), 1)
-        self.assertEqual(data["signals"][0]["id"], "signal-demo-001")
+        self.assertGreaterEqual(len(data["signals"]), 5)
+        self.assertTrue(data["signals"][0]["id"].startswith("signal-2026-"))
+        self.assertTrue(all(signal["source_urls"] for signal in data["signals"]))
 
     def test_search_knowledge(self) -> None:
         response = self.client.get(
@@ -116,6 +117,7 @@ class RoutesTest(unittest.TestCase):
     def test_invalid_connector_export_returns_503(self) -> None:
         original_memory_dir = os.environ.get("NEWSWIKI_USER_MEMORY_DIR")
         original_layers = os.environ.get("NEWSWIKI_ENABLED_LAYERS")
+        original_context_mode = os.environ.get("NEWSWIKI_CONTEXT_MODE")
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             (root / "private_memory.json").write_text(
@@ -139,6 +141,7 @@ class RoutesTest(unittest.TestCase):
             )
             os.environ["NEWSWIKI_USER_MEMORY_DIR"] = str(root)
             os.environ["NEWSWIKI_ENABLED_LAYERS"] = "newswiki_hosted,user_private"
+            os.environ["NEWSWIKI_CONTEXT_MODE"] = "local"
             response = self.client.post(
                 "/v1/context",
                 json={"task": "design hosted MCP service", "topic": "mcp"},
@@ -153,9 +156,44 @@ class RoutesTest(unittest.TestCase):
             os.environ.pop("NEWSWIKI_ENABLED_LAYERS", None)
         else:
             os.environ["NEWSWIKI_ENABLED_LAYERS"] = original_layers
+        if original_context_mode is None:
+            os.environ.pop("NEWSWIKI_CONTEXT_MODE", None)
+        else:
+            os.environ["NEWSWIKI_CONTEXT_MODE"] = original_context_mode
 
         self.assertEqual(response.status_code, 503)
         self.assertFalse(response.json()["ok"])
+
+    def test_invalid_connector_does_not_break_public_signal_endpoint(self) -> None:
+        original_memory_dir = os.environ.get("NEWSWIKI_USER_MEMORY_DIR")
+        original_layers = os.environ.get("NEWSWIKI_ENABLED_LAYERS")
+        original_context_mode = os.environ.get("NEWSWIKI_CONTEXT_MODE")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "private_memory.json").write_text(
+                json.dumps({"private_memory": [{"id": "bad-memory", "private_notes": "do not serve"}]}),
+                encoding="utf-8",
+            )
+            os.environ["NEWSWIKI_USER_MEMORY_DIR"] = str(root)
+            os.environ["NEWSWIKI_ENABLED_LAYERS"] = "newswiki_hosted,user_private"
+            os.environ["NEWSWIKI_CONTEXT_MODE"] = "local"
+            response = self.client.get("/v1/signals?topic=mcp", headers={"x-api-key": AUTH_VALUE})
+
+        if original_memory_dir is None:
+            os.environ.pop("NEWSWIKI_USER_MEMORY_DIR", None)
+        else:
+            os.environ["NEWSWIKI_USER_MEMORY_DIR"] = original_memory_dir
+        if original_layers is None:
+            os.environ.pop("NEWSWIKI_ENABLED_LAYERS", None)
+        else:
+            os.environ["NEWSWIKI_ENABLED_LAYERS"] = original_layers
+        if original_context_mode is None:
+            os.environ.pop("NEWSWIKI_CONTEXT_MODE", None)
+        else:
+            os.environ["NEWSWIKI_CONTEXT_MODE"] = original_context_mode
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.json()["signals"])
 
 
 if __name__ == "__main__":

@@ -21,6 +21,7 @@ EXPECTED_FILES = {
     "briefs.json": "briefs",
     "topics.json": "topics",
 }
+REQUIRED_COLLECTIONS = {"signals", "knowledge_pages", "tool_cards", "briefs", "topics"}
 
 REQUIRED_FIELDS = {
     "id",
@@ -36,6 +37,23 @@ REQUIRED_FIELDS = {
 
 VALID_FRESHNESS = {"live", "daily", "weekly", "archival"}
 VALID_CONFIDENCE = {"low", "medium", "high"}
+PUBLIC_SOURCE_TYPES = {"newswiki_hosted", "newswiki_curated", "recommended_template"}
+PUBLIC_PRIVACY_LEVELS = {"public"}
+REQUIRED_REAL_SIGNAL_FIELDS = {
+    "affected_tasks",
+    "data_limits",
+    "decision_impact",
+    "entities",
+    "last_verified_at",
+    "newswiki_interpretation",
+    "observed_at",
+    "source_claim",
+    "source_confidence",
+    "source_published_at",
+    "stale_after",
+    "time_sensitivity",
+    "why_it_matters",
+}
 
 FORBIDDEN_FIELD_NAMES = {
     "body",
@@ -145,6 +163,14 @@ def validate_common_item(item: Any, *, file_name: str, collection: str, index: i
     if item.get("public_safe") is not True:
         errors.append(ValidationError(file_name, json_path(path, "public_safe"), "public_safe must be true"))
 
+    source_type = item.get("source_type")
+    if source_type is not None and source_type not in PUBLIC_SOURCE_TYPES:
+        errors.append(ValidationError(file_name, json_path(path, "source_type"), "source_type is not allowed in public export"))
+
+    privacy_level = item.get("privacy_level")
+    if privacy_level is not None and privacy_level not in PUBLIC_PRIVACY_LEVELS:
+        errors.append(ValidationError(file_name, json_path(path, "privacy_level"), "privacy_level must be public in public export"))
+
     source_urls = item.get("source_urls")
     if not isinstance(source_urls, list) or not source_urls:
         errors.append(ValidationError(file_name, json_path(path, "source_urls"), "source_urls must be a non-empty array"))
@@ -169,6 +195,32 @@ def validate_common_item(item: Any, *, file_name: str, collection: str, index: i
             errors.append(ValidationError(file_name, json_path(path, field), f"{field} must be a non-empty string"))
 
     walk_forbidden(item, file_name=file_name, path=path, errors=errors)
+    validate_collection_item(item, file_name=file_name, collection=collection, index=index, errors=errors)
+
+
+def validate_collection_item(item: dict[str, Any], *, file_name: str, collection: str, index: int, errors: list[ValidationError]) -> None:
+    path = f"{collection}[{index}]"
+    if collection == "signals" and not file_name.endswith(".example.json"):
+        missing = sorted(REQUIRED_REAL_SIGNAL_FIELDS - set(item))
+        if missing:
+            errors.append(ValidationError(file_name, path, f"missing real signal fields: {', '.join(missing)}"))
+        for field in ["affected_tasks", "data_limits", "entities"]:
+            if field in item and not isinstance(item[field], list):
+                errors.append(ValidationError(file_name, json_path(path, field), f"{field} must be an array"))
+        for field in [
+            "decision_impact",
+            "last_verified_at",
+            "newswiki_interpretation",
+            "observed_at",
+            "source_claim",
+            "source_confidence",
+            "source_published_at",
+            "stale_after",
+            "time_sensitivity",
+            "why_it_matters",
+        ]:
+            if field in item and (not isinstance(item[field], str) or not item[field].strip()):
+                errors.append(ValidationError(file_name, json_path(path, field), f"{field} must be a non-empty string"))
 
 
 def expected_collection_for(path: Path, data: Any) -> str | None:
@@ -222,6 +274,15 @@ def validate(path: Path) -> dict[str, Any]:
     files = find_json_files(path)
     file_reports = [validate_file(file, root) for file in files]
     errors = [error for report in file_reports for error in report["errors"]]
+    if path.is_dir():
+        found_collections = {
+            report.get("collection")
+            for report in file_reports
+            if report.get("collection") in REQUIRED_COLLECTIONS
+        }
+        missing_collections = sorted(REQUIRED_COLLECTIONS - found_collections)
+        for collection in missing_collections:
+            errors.append({"file": ".", "path": collection, "message": "missing required export collection"})
     return {
         "ok": not errors,
         "root": str(root),

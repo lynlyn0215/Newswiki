@@ -22,6 +22,19 @@ def valid_signal(**overrides: object) -> dict:
         "freshness": "daily",
         "confidence": "medium",
         "public_safe": True,
+        "affected_tasks": ["roadmap"],
+        "data_limits": ["Example only."],
+        "decision_impact": "Use this signal as weak input only.",
+        "entities": ["Newswiki"],
+        "last_verified_at": "2026-01-02T10:00:00Z",
+        "newswiki_interpretation": "This is a public-safe signal example.",
+        "observed_at": "2026-01-02T10:00:00Z",
+        "source_claim": "A source made a public claim.",
+        "source_confidence": "medium",
+        "source_published_at": "2026-01-02T00:00:00Z",
+        "stale_after": "2026-02-02T00:00:00Z",
+        "time_sensitivity": "medium",
+        "why_it_matters": "It may affect agent context design.",
     }
     item.update(overrides)
     return item
@@ -85,6 +98,38 @@ class PublicExportSchemaTest(unittest.TestCase):
 
         self.assertFalse(report["ok"])
         self.assertIn("secret-like", report["errors"][0]["message"])
+
+    def test_rejects_empty_stale_after_for_real_signal(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "signals.json"
+            path.write_text(json.dumps({"signals": [valid_signal(stale_after="")]}), encoding="utf-8")
+
+            report = validate(path)
+
+        self.assertFalse(report["ok"])
+        self.assertTrue(any(error["path"] == "signals[0].stale_after" for error in report["errors"]))
+
+    def test_rejects_missing_stale_after_for_real_signal(self) -> None:
+        signal = valid_signal()
+        del signal["stale_after"]
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "signals.json"
+            path.write_text(json.dumps({"signals": [signal]}), encoding="utf-8")
+
+            report = validate(path)
+
+        self.assertFalse(report["ok"])
+        self.assertTrue(any("missing real signal fields: stale_after" in error["message"] for error in report["errors"]))
+
+    def test_rejects_non_string_stale_after_for_real_signal(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "signals.json"
+            path.write_text(json.dumps({"signals": [valid_signal(stale_after=123)]}), encoding="utf-8")
+
+            report = validate(path)
+
+        self.assertFalse(report["ok"])
+        self.assertTrue(any(error["path"] == "signals[0].stale_after" for error in report["errors"]))
 
 
 if __name__ == "__main__":

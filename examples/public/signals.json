@@ -1,0 +1,663 @@
+{
+  "signals": [
+    {
+      "id": "signal-2026-claude-code-hooks-preprompt",
+      "title": "Claude Code hooks can add context before prompt processing",
+      "summary": "Claude Code hooks include UserPromptSubmit, which can add extra context before the user prompt is processed.",
+      "source_urls": [
+        "https://code.claude.com/docs/en/hooks"
+      ],
+      "topics": [
+        "claude-code",
+        "hooks",
+        "context-routing",
+        "ai-agents",
+        "product-strategy"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "category": "agent-runtime",
+      "impact": "Pre-plan context injection can be implemented outside the main agent loop in clients that support prompt hooks.",
+      "why_it_matters": "Newswiki's pre-plan brief can later become an automatic hook integration, but v1 should prove that the brief itself improves decisions.",
+      "affected_tasks": [
+        "pre-plan-brief-design",
+        "automation-hooks",
+        "client-integration"
+      ],
+      "decision_impact": "Separate brief quality from automation convenience in the roadmap.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "entities": [
+        "Anthropic",
+        "Claude Code"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "high",
+      "observed_at": "2026-05-07",
+      "source_published_at": "2026-05-07",
+      "source_claim": "Claude Code hooks include UserPromptSubmit, which can add extra context before the user prompt is processed.",
+      "newswiki_interpretation": "Newswiki's pre-plan brief can later become an automatic hook integration, but v1 should prove that the brief itself improves decisions.",
+      "data_limits": [],
+      "source_kind": "official source",
+      "date_role": "source or release date"
+    },
+    {
+      "id": "signal-2026-claude-code-remote-mcp",
+      "title": "Claude Code supports remote MCP servers",
+      "summary": "Anthropic announced remote MCP support in Claude Code so agents can access third-party tools, project systems, and knowledge bases without local server management.",
+      "source_urls": [
+        "https://www.anthropic.com/news/claude-code-remote-mcp"
+      ],
+      "topics": [
+        "mcp",
+        "claude-code",
+        "remote-mcp",
+        "ai-agents",
+        "product-strategy"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "archival",
+      "confidence": "high",
+      "public_safe": true,
+      "category": "platform",
+      "impact": "Remote MCP is already an accepted Claude Code integration path.",
+      "why_it_matters": "A hosted Newswiki MCP can be tested as a user-facing connector instead of only as a local template.",
+      "affected_tasks": [
+        "claude-code-test",
+        "hosted-alpha-onboarding",
+        "mcp-client-docs"
+      ],
+      "decision_impact": "Keep Claude Code setup prompts and smoke tests in the repo, but position them as client validation rather than the product itself.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "entities": [
+        "Anthropic",
+        "Claude Code",
+        "MCP"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "medium",
+      "observed_at": "2026-05-07",
+      "source_published_at": "2025-06-18",
+      "source_claim": "Anthropic announced remote MCP support in Claude Code so agents can access third-party tools, project systems, and knowledge bases without local server management.",
+      "newswiki_interpretation": "A hosted Newswiki MCP can be tested as a user-facing connector instead of only as a local template.",
+      "data_limits": [],
+      "source_kind": "official source",
+      "date_role": "source or release date"
+    },
+    {
+      "id": "signal-2026-claude-code-subagents-mcp",
+      "title": "Claude Code subagents can inherit MCP tools",
+      "summary": "Claude Code docs say subagents can inherit MCP tools from the main conversation unless tool access is restricted.",
+      "source_urls": [
+        "https://code.claude.com/docs/en/sub-agents"
+      ],
+      "topics": [
+        "claude-code",
+        "subagents",
+        "mcp",
+        "ai-agents",
+        "product-strategy"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "category": "agent-runtime",
+      "impact": "A single Newswiki context service can support main agents and specialized reviewers when clients expose MCP tools to subagents.",
+      "why_it_matters": "Cross-agent context becomes more useful when specialized review, research, and implementation agents can query the same source-backed brief layer.",
+      "affected_tasks": [
+        "subagent-workflow-design",
+        "cross-agent-context",
+        "mcp-permission-model"
+      ],
+      "decision_impact": "Design Newswiki brief outputs to be self-contained enough for subagents with separate context windows.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "entities": [
+        "Anthropic",
+        "Claude Code"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "high",
+      "observed_at": "2026-05-07",
+      "source_published_at": "2026-05-07",
+      "source_claim": "Claude Code docs say subagents can inherit MCP tools from the main conversation unless tool access is restricted.",
+      "newswiki_interpretation": "Cross-agent context becomes more useful when specialized review, research, and implementation agents can query the same source-backed brief layer.",
+      "data_limits": [],
+      "source_kind": "official source",
+      "date_role": "source or release date"
+    },
+    {
+      "id": "signal-2026-cloudflare-code-mode-mcp",
+      "title": "Cloudflare proposes Code Mode to reduce MCP tool context cost",
+      "summary": "Cloudflare's Code Mode pattern exposes a large API through a compact server-side interface with progressive discovery and sandboxed execution.",
+      "source_urls": [
+        "https://blog.cloudflare.com/code-mode-mcp/"
+      ],
+      "topics": [
+        "mcp",
+        "context-engineering",
+        "tool-use",
+        "ai-devtools",
+        "product-strategy"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "category": "architecture",
+      "impact": "The MCP ecosystem is optimizing for fewer exposed tools and more server-side composition.",
+      "why_it_matters": "Newswiki should expose a small number of high-level brief/search tools instead of many narrow signal tools.",
+      "affected_tasks": [
+        "mcp-contract-design",
+        "tool-surface-review",
+        "api-simplification"
+      ],
+      "decision_impact": "Keep `get_context_for_task` as the flagship high-level tool.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "entities": [
+        "Cloudflare",
+        "MCP"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "high",
+      "observed_at": "2026-05-07",
+      "source_published_at": "2026-02-20",
+      "source_claim": "Cloudflare's Code Mode pattern exposes a large API through a compact server-side interface with progressive discovery and sandboxed execution.",
+      "newswiki_interpretation": "Newswiki should expose a small number of high-level brief/search tools instead of many narrow signal tools.",
+      "data_limits": [],
+      "source_kind": "official source",
+      "date_role": "source or release date"
+    },
+    {
+      "id": "signal-2026-cloudflare-enterprise-mcp-security",
+      "title": "Cloudflare frames MCP adoption as an enterprise security problem",
+      "summary": "Cloudflare describes company-wide MCP adoption and the need to manage security risks such as authorization sprawl, prompt injection, and supply-chain exposure.",
+      "source_urls": [
+        "https://blog.cloudflare.com/enterprise-mcp/"
+      ],
+      "topics": [
+        "mcp",
+        "security",
+        "enterprise-ai",
+        "product-strategy",
+        "open-core"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "category": "security",
+      "impact": "Hosted MCP services need governance and minimal disclosure by design.",
+      "why_it_matters": "Newswiki's public-safe boundary, source URLs, and data-limit warnings are product requirements, not polish.",
+      "affected_tasks": [
+        "security-review",
+        "hosted-alpha-design",
+        "public-export-boundary"
+      ],
+      "decision_impact": "Prioritize read-only context and validation over broad write-back MCP features.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "entities": [
+        "Cloudflare",
+        "MCP"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "high",
+      "observed_at": "2026-05-07",
+      "source_published_at": "2026-04-14",
+      "source_claim": "Cloudflare describes company-wide MCP adoption and the need to manage security risks such as authorization sprawl, prompt injection, and supply-chain exposure.",
+      "newswiki_interpretation": "Newswiki's public-safe boundary, source URLs, and data-limit warnings are product requirements, not polish.",
+      "data_limits": [],
+      "source_kind": "official source",
+      "date_role": "source or release date"
+    },
+    {
+      "id": "signal-2026-codex-memory-plugins-automations",
+      "title": "Codex expands native memory, plugins, and automations",
+      "summary": "OpenAI's April 2026 Codex update adds memory preview, more than 90 plugins, expanded automations, and broader desktop workflow support.",
+      "source_urls": [
+        "https://openai.com/index/codex-for-almost-everything/"
+      ],
+      "topics": [
+        "codex",
+        "agent-memory",
+        "plugins",
+        "ai-agents",
+        "product-strategy",
+        "model-releases"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "category": "platform",
+      "impact": "Native agent platforms are absorbing generic memory, plugin, and workflow infrastructure.",
+      "why_it_matters": "Newswiki should avoid selling a generic skill index or memory layer as the moat; the wedge is current, source-backed external intelligence.",
+      "affected_tasks": [
+        "product-positioning",
+        "competitive-analysis",
+        "roadmap-triage"
+      ],
+      "decision_impact": "Keep Capability MCP on-demand and make external signal quality the primary product proof.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-05-30",
+      "entities": [
+        "Codex",
+        "OpenAI"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "high",
+      "observed_at": "2026-05-07",
+      "source_published_at": "2026-04-16",
+      "source_claim": "OpenAI's April 2026 Codex update adds memory preview, more than 90 plugins, expanded automations, and broader desktop workflow support.",
+      "newswiki_interpretation": "Newswiki should avoid selling a generic skill index or memory layer as the moat; the wedge is current, source-backed external intelligence.",
+      "data_limits": [
+        "Automated fetch may be blocked; manually verify the source page before treating it as current."
+      ],
+      "source_kind": "official source",
+      "date_role": "source or release date"
+    },
+    {
+      "id": "signal-2026-cursor-dynamic-context-discovery",
+      "title": "Cursor reports token savings from dynamic MCP context discovery",
+      "summary": "Cursor's dynamic context discovery post reports a 46.9% token reduction in MCP-tool runs by exposing compact tool context and prompting lookup only when needed.",
+      "source_urls": [
+        "https://cursor.com/blog/dynamic-context-discovery"
+      ],
+      "topics": [
+        "cursor",
+        "context-engineering",
+        "mcp",
+        "ai-agents",
+        "product-strategy",
+        "ai-devtools"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "category": "context-engineering",
+      "impact": "Context systems should route and compress information instead of dumping all tools and knowledge into every prompt.",
+      "why_it_matters": "This directly supports Newswiki's move away from always-on Capability MCP and toward task-relevant pre-plan briefs.",
+      "affected_tasks": [
+        "context-router-design",
+        "token-economics",
+        "capability-mcp-positioning"
+      ],
+      "decision_impact": "Default to compact retrieval decisions and explicit skipped layers.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "entities": [
+        "Cursor",
+        "MCP"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "high",
+      "observed_at": "2026-05-07",
+      "source_published_at": "2026-01-06",
+      "source_claim": "Cursor's dynamic context discovery post reports a 46.9% token reduction in MCP-tool runs by exposing compact tool context and prompting lookup only when needed.",
+      "newswiki_interpretation": "This directly supports Newswiki's move away from always-on Capability MCP and toward task-relevant pre-plan briefs.",
+      "data_limits": [],
+      "source_kind": "official source",
+      "date_role": "source or release date"
+    },
+    {
+      "id": "signal-2026-cursor-plugins-marketplace",
+      "title": "Cursor packages MCP servers, skills, subagents, rules, and hooks as plugins",
+      "summary": "Cursor's plugin announcement presents plugins as bundles of MCP servers, skills, subagents, rules, and hooks for agent workflows.",
+      "source_urls": [
+        "https://cursor.com/blog/marketplace/"
+      ],
+      "topics": [
+        "cursor",
+        "plugins",
+        "skills",
+        "mcp",
+        "ai-agents",
+        "product-strategy",
+        "ai-devtools"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "category": "platform",
+      "impact": "Agent clients are starting to own capability packaging and distribution.",
+      "why_it_matters": "A standalone Newswiki skill registry is likely to be commoditized unless it is tied to stronger context and signal workflows.",
+      "affected_tasks": [
+        "skill-registry-scope",
+        "product-roadmap",
+        "distribution-strategy"
+      ],
+      "decision_impact": "Treat skills as optional adapters or recommendations, not the core v1 product.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "entities": [
+        "Cursor",
+        "MCP"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "high",
+      "observed_at": "2026-05-07",
+      "source_published_at": "2026-02-17",
+      "source_claim": "Cursor's plugin announcement presents plugins as bundles of MCP servers, skills, subagents, rules, and hooks for agent workflows.",
+      "newswiki_interpretation": "A standalone Newswiki skill registry is likely to be commoditized unless it is tied to stronger context and signal workflows.",
+      "data_limits": [],
+      "source_kind": "official source",
+      "date_role": "source or release date"
+    },
+    {
+      "id": "signal-2026-gemini-cli-subagents",
+      "title": "Gemini CLI adds subagents with separate tools and context",
+      "summary": "Google announced Gemini CLI subagents that operate with their own tools, MCP servers, instructions, and context windows.",
+      "source_urls": [
+        "https://developers.googleblog.com/subagents-have-arrived-in-gemini-cli/"
+      ],
+      "topics": [
+        "gemini-cli",
+        "subagents",
+        "agent-infrastructure",
+        "ai-agents",
+        "product-strategy"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "category": "agent-runtime",
+      "impact": "Subagent architectures are becoming cross-platform, increasing the need for shared, compact context packages.",
+      "why_it_matters": "Newswiki should not be Claude- or Codex-specific; its output contract should work for any agent that can read a brief or call MCP.",
+      "affected_tasks": [
+        "cross-agent-protocol",
+        "context-pack-format",
+        "gemini-cli-support"
+      ],
+      "decision_impact": "Keep the context pack schema platform-neutral and avoid depending on one client's memory system.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "entities": [
+        "Gemini CLI",
+        "Google"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "high",
+      "observed_at": "2026-05-07",
+      "source_published_at": "2026-04-15",
+      "source_claim": "Google announced Gemini CLI subagents that operate with their own tools, MCP servers, instructions, and context windows.",
+      "newswiki_interpretation": "Newswiki should not be Claude- or Codex-specific; its output contract should work for any agent that can read a brief or call MCP.",
+      "data_limits": [],
+      "source_kind": "official source",
+      "date_role": "source or release date"
+    },
+    {
+      "id": "signal-2026-github-copilot-semantic-search",
+      "title": "Copilot coding agent adds semantic code search",
+      "summary": "GitHub says Copilot coding agent now has semantic code search and automatically uses it when appropriate.",
+      "source_urls": [
+        "https://github.blog/changelog/2026-03-17-copilot-coding-agent-works-faster-with-semantic-code-search/"
+      ],
+      "topics": [
+        "github",
+        "coding-agents",
+        "context-engineering",
+        "ai-agents",
+        "ai-devtools",
+        "product-strategy"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "category": "agent-runtime",
+      "impact": "Agent runtimes are adding better automatic retrieval for repository context.",
+      "why_it_matters": "Newswiki should focus on external and cross-project signals that platform-local code search cannot provide.",
+      "affected_tasks": [
+        "product-differentiation",
+        "context-source-prioritization",
+        "agent-eval-design"
+      ],
+      "decision_impact": "Do not position Newswiki as a replacement for client-native code search.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "entities": [
+        "Copilot coding agent",
+        "GitHub",
+        "MCP"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "high",
+      "observed_at": "2026-05-07",
+      "source_published_at": "2026-03-17",
+      "source_claim": "GitHub says Copilot coding agent now has semantic code search and automatically uses it when appropriate.",
+      "newswiki_interpretation": "Newswiki should focus on external and cross-project signals that platform-local code search cannot provide.",
+      "data_limits": [],
+      "source_kind": "official source",
+      "date_role": "source or release date"
+    },
+    {
+      "id": "signal-2026-github-mcp-oauth-copilot-tools",
+      "title": "GitHub MCP expands toward HTTP OAuth and Copilot agent tooling",
+      "summary": "GitHub's MCP server update adds HTTP server mode with OAuth token support and new tools for working with Copilot coding agent jobs.",
+      "source_urls": [
+        "https://github.blog/changelog/2026-01-28-github-mcp-server-new-projects-tools-oauth-scope-filtering-and-new-features/"
+      ],
+      "topics": [
+        "mcp",
+        "github",
+        "coding-agents",
+        "ai-agents",
+        "ai-devtools"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "category": "platform",
+      "impact": "GitHub is treating MCP as part of hosted agent operations, not just local integration.",
+      "why_it_matters": "Newswiki should assume coding agents will increasingly run in hosted surfaces and need compact, authenticated, source-backed context.",
+      "affected_tasks": [
+        "github-agent-integration",
+        "mcp-auth-design",
+        "competitive-analysis"
+      ],
+      "decision_impact": "Do not overfit Newswiki to one local client config format.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "entities": [
+        "Copilot coding agent",
+        "GitHub",
+        "MCP"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "high",
+      "observed_at": "2026-05-07",
+      "source_published_at": "2026-01-28",
+      "source_claim": "GitHub's MCP server update adds HTTP server mode with OAuth token support and new tools for working with Copilot coding agent jobs.",
+      "newswiki_interpretation": "Newswiki should assume coding agents will increasingly run in hosted surfaces and need compact, authenticated, source-backed context.",
+      "data_limits": [],
+      "source_kind": "official source",
+      "date_role": "source or release date"
+    },
+    {
+      "id": "signal-2026-hermes-native-memory-skills-mcp",
+      "title": "Hermes Agent exposes memory, skills, and MCP integration as native agent capabilities",
+      "summary": "Hermes official documentation presents persistent memory, a skills system, and MCP integration as built-in capabilities for the agent runtime.",
+      "source_urls": [
+        "https://hermes-agent.nousresearch.com/docs/user-guide/features/overview/"
+      ],
+      "topics": [
+        "ai-agents",
+        "hermes",
+        "mcp",
+        "agent-memory",
+        "skills",
+        "product-strategy"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "source_published_at": "2026-05-07",
+      "category": "agent-runtime",
+      "impact": "Generic memory, skill, and MCP wrapper features are less differentiated when agent runtimes provide them natively.",
+      "why_it_matters": "Newswiki should complement Hermes with current source-backed external context instead of competing as another memory or skill runtime.",
+      "affected_tasks": [
+        "hermes-support",
+        "skill-registry-scope",
+        "product-positioning",
+        "cross-agent-context"
+      ],
+      "decision_impact": "Support Hermes as a consumer of Newswiki briefs, but defer Hermes-specific write-back or skill-curator integration until the brief proves value.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "entities": [
+        "Hermes Agent",
+        "Nous Research",
+        "MCP"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "high",
+      "observed_at": "2026-05-07",
+      "source_claim": "Hermes documentation describes persistent memory, skills, tools, and MCP integration as core features.",
+      "newswiki_interpretation": "Newswiki should treat Hermes as a complementary agent client rather than a capability layer to replace.",
+      "data_limits": [],
+      "source_kind": "official source",
+      "date_role": "source or release date"
+    },
+    {
+      "id": "signal-2026-mcp-roadmap-enterprise-readiness",
+      "title": "MCP roadmap calls out enterprise readiness gaps",
+      "summary": "The MCP roadmap highlights audit trails, SSO-integrated auth, gateway behavior, and configuration portability as enterprise readiness needs.",
+      "source_urls": [
+        "https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/"
+      ],
+      "topics": [
+        "mcp",
+        "security",
+        "enterprise-ai",
+        "product-strategy",
+        "open-core"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "category": "protocol",
+      "impact": "Enterprise MCP products need governance and explainability, not only tool wrappers.",
+      "why_it_matters": "Newswiki's boundary design should make source provenance, user-visible data limits, and auth expectations first-class product surfaces.",
+      "affected_tasks": [
+        "enterprise-mcp-positioning",
+        "privacy-review",
+        "hosted-alpha-scope"
+      ],
+      "decision_impact": "Keep public-safe exports and source-backed briefs as the safety boundary for hosted alpha.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "entities": [
+        "MCP",
+        "Model Context Protocol"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "high",
+      "observed_at": "2026-05-07",
+      "source_published_at": "2026-03-09",
+      "source_claim": "The MCP roadmap highlights audit trails, SSO-integrated auth, gateway behavior, and configuration portability as enterprise readiness needs.",
+      "newswiki_interpretation": "Newswiki's boundary design should make source provenance, user-visible data limits, and auth expectations first-class product surfaces.",
+      "data_limits": [],
+      "source_kind": "official source",
+      "date_role": "source or release date"
+    },
+    {
+      "id": "signal-2026-mcp-roadmap-remote-scale",
+      "title": "MCP roadmap prioritizes remote transport scalability",
+      "summary": "The 2026 MCP roadmap names transport evolution and horizontal scalability as priority work for production remote MCP servers.",
+      "source_urls": [
+        "https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/"
+      ],
+      "topics": [
+        "mcp",
+        "agent-infrastructure",
+        "hosted-context",
+        "product-strategy",
+        "open-core"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "category": "protocol",
+      "impact": "Hosted MCP services should plan for stateless scaling, session handling, and discoverable server metadata.",
+      "why_it_matters": "A context service that assumes local stdio-only MCP will age poorly as the protocol moves further into production remote deployments.",
+      "affected_tasks": [
+        "hosted-mcp-architecture",
+        "deployment-planning",
+        "mcp-product-positioning"
+      ],
+      "decision_impact": "Prefer a read-only remote MCP contract with explicit provenance and health metadata before adding write paths.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "entities": [
+        "MCP",
+        "Model Context Protocol"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "high",
+      "observed_at": "2026-05-07",
+      "source_published_at": "2026-03-09",
+      "source_claim": "The 2026 MCP roadmap names transport evolution and horizontal scalability as priority work for production remote MCP servers.",
+      "newswiki_interpretation": "A context service that assumes local stdio-only MCP will age poorly as the protocol moves further into production remote deployments.",
+      "data_limits": [],
+      "source_kind": "official source",
+      "date_role": "source or release date"
+    },
+    {
+      "id": "signal-2026-vercel-remote-mcp",
+      "title": "Vercel ships an official remote MCP server",
+      "summary": "Vercel documents an official OAuth-based remote MCP endpoint at mcp.vercel.com for project, deployment, log, and documentation workflows.",
+      "source_urls": [
+        "https://vercel.com/docs/agent-resources/vercel-mcp"
+      ],
+      "topics": [
+        "mcp",
+        "remote-mcp",
+        "developer-platforms",
+        "ai-devtools",
+        "open-core",
+        "product-strategy"
+      ],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "category": "platform",
+      "impact": "Major developer platforms are packaging operational context as remote MCP services across multiple agents.",
+      "why_it_matters": "Newswiki should compete on curated external intelligence and brief quality, not on the novelty of exposing an MCP endpoint.",
+      "affected_tasks": [
+        "remote-mcp-market-analysis",
+        "hosted-service-design",
+        "agent-client-setup"
+      ],
+      "decision_impact": "Use Vercel-style OAuth remote MCP as a comparable deployment pattern, while differentiating through signal curation.",
+      "last_verified_at": "2026-05-07",
+      "stale_after": "2026-06-15",
+      "entities": [
+        "MCP",
+        "Vercel"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "high",
+      "observed_at": "2026-05-07",
+      "source_published_at": "2026-01-30",
+      "source_claim": "Vercel documents an official OAuth-based remote MCP endpoint at mcp.vercel.com for project, deployment, log, and documentation workflows.",
+      "newswiki_interpretation": "Newswiki should compete on curated external intelligence and brief quality, not on the novelty of exposing an MCP endpoint.",
+      "data_limits": [],
+      "source_kind": "official source",
+      "date_role": "source or release date"
+    }
+  ]
+}

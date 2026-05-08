@@ -1,0 +1,37 @@
+{
+  "id": "006-model-api-update",
+  "task": "Does a recent model or API update affect our coding-agent workflow?",
+  "topic": "model-releases",
+  "needs_fresh_facts": true,
+  "expected_context": [
+    "official update",
+    "workflow impact",
+    "stale-after metadata"
+  ],
+  "success_signals": [
+    "workflow recommendation is source-backed",
+    "version/date is explicit"
+  ],
+  "expected_context_checks": [
+    {
+      "label": "official model/API update",
+      "all_terms": [
+        "codex"
+      ],
+      "fields_present": [
+        "source_kind",
+        "source_published_at"
+      ]
+    },
+    {
+      "label": "workflow impact and stale metadata",
+      "all_terms": [
+        "workflow"
+      ],
+      "fields_present": [
+        "stale_after",
+        "decision_impact"
+      ]
+    }
+  ]
+}

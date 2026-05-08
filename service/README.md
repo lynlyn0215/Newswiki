@@ -40,6 +40,8 @@ python -m pip install -r service/requirements.txt
 
 `NEWSWIKI_ENABLED_LAYERS` is a comma-separated list of context source layers. It defaults to `newswiki_hosted,newswiki_curated,recommended_template`.
 
+`NEWSWIKI_CONTEXT_MODE` is `hosted` by default. Hosted mode loads only public-safe exports. Set it to `local` before loading private connector layers.
+
 `NEWSWIKI_USER_MEMORY_DIR` can point at a connector export directory containing `private_memory.json`.
 
 `NEWSWIKI_LOCAL_CAPABILITY_DIR` can point at a connector export directory containing `local_capabilities.json`.
@@ -49,6 +51,7 @@ Example:
 ```powershell
 $env:NEWSWIKI_PUBLIC_EXPORT_DIR="C:\path\to\public-export"
 $env:NEWSWIKI_API_KEYS="local-key"
+$env:NEWSWIKI_CONTEXT_MODE="local"
 $env:NEWSWIKI_ENABLED_LAYERS="newswiki_hosted,newswiki_curated,recommended_template,user_private,local_capability"
 $env:NEWSWIKI_USER_MEMORY_DIR="C:\path\to\connector-export"
 $env:NEWSWIKI_LOCAL_CAPABILITY_DIR="C:\path\to\connector-export"
@@ -68,7 +71,11 @@ Then call:
 curl.exe -H "x-api-key: local-key" http://127.0.0.1:8000/v1/signals
 ```
 
-Useful endpoints:
+Primary endpoint:
+
+- `POST /v1/context`
+
+Support/debug endpoints:
 
 - `GET /v1/health`
 - `GET /v1/signals`
@@ -76,7 +83,6 @@ Useful endpoints:
 - `GET /v1/knowledge/search?query=public-safe`
 - `POST /v1/tools/recommend`
 - `GET /v1/topics/{topic}/brief`
-- `POST /v1/context`
 - `GET /v1/usage`
 
 ## Context Layers
@@ -101,14 +107,17 @@ The alpha MCP adapter exposes the same read-only context tools as the REST API. 
 python -m service.app.mcp_server --export-dir examples/public --api-keys local-key
 ```
 
-Alpha tools:
+Primary alpha tool:
+
+- `get_context_for_task(api_key, task, topic?, token_budget?)`
+
+Support/debug tools:
 
 - `latest_signals(api_key, topic?, days?, limit?)`
 - `search_news(api_key, query, topic?, days?, limit?)`
 - `search_knowledge(api_key, query, topic?, limit?)`
 - `recommend_agent_tools(api_key, task, environment?, limit?)`
 - `get_topic_brief(api_key, topic, depth?)`
-- `get_context_for_task(api_key, task, topic?, token_budget?)`
 
 The `api_key` argument must match one of the configured `NEWSWIKI_API_KEYS` values. Invalid keys return a structured error instead of data.
 

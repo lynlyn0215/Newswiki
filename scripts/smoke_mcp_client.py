@@ -40,6 +40,7 @@ async def run_smoke(args: argparse.Namespace) -> dict[str, Any]:
             await session.initialize()
             tools = await session.list_tools()
             tool_names = sorted(tool.name for tool in tools.tools)
+            tools_by_name = {tool.name: tool for tool in tools.tools}
             required = {
                 "latest_signals",
                 "search_news",
@@ -51,6 +52,13 @@ async def run_smoke(args: argparse.Namespace) -> dict[str, Any]:
             missing = sorted(required - set(tool_names))
             if missing:
                 raise RuntimeError(f"Missing MCP tools: {', '.join(missing)}")
+            default_description = (tools_by_name["get_context_for_task"].description or "").lower()
+            if "pre-plan brief" not in default_description:
+                raise RuntimeError("get_context_for_task must be described as the pre-plan brief default")
+            for support_tool in ["latest_signals", "search_news", "search_knowledge", "recommend_agent_tools", "get_topic_brief"]:
+                description = (tools_by_name[support_tool].description or "").lower()
+                if "support/debug" not in description or "prefer get_context_for_task" not in description:
+                    raise RuntimeError(f"{support_tool} must be described as support/debug, not the default workflow")
 
             result = await session.call_tool(
                 "get_context_for_task",
@@ -64,17 +72,25 @@ async def run_smoke(args: argparse.Namespace) -> dict[str, Any]:
             payload = parse_json_tool_result(result)
             if payload.get("ok") is not True:
                 raise RuntimeError(f"MCP tool failed: {payload}")
-            for key in ["signals", "knowledge", "tools", "sources"]:
+            for key in ["brief_type", "retrieval_decision", "relevant_signals", "stale_assumption_warnings", "signals", "knowledge", "tools", "sources"]:
                 if key not in payload:
                     raise RuntimeError(f"Context pack missing {key}")
+            external_decision = payload["retrieval_decision"].get("external_signals", {})
+            if not isinstance(external_decision, dict) or "status" not in external_decision:
+                raise RuntimeError("Context pack retrieval_decision must use nested layer objects")
             return {
                 "ok": True,
                 "tools": tool_names,
                 "context_pack": {
                     "task": payload["task"],
+                    "brief_type": payload["brief_type"],
+                    "needs_fresh_facts": payload["needs_fresh_facts"],
+                    "external_signal_status": external_decision["status"],
+                    "external_fallback_used": external_decision.get("fallback_used", False),
                     "signals": len(payload["signals"]),
                     "knowledge": len(payload["knowledge"]),
                     "tools": len(payload["tools"]),
+                    "stale_assumption_warnings": len(payload["stale_assumption_warnings"]),
                     "sources": len(payload["sources"]),
                     "confidence": payload["confidence"],
                     "freshness": payload["freshness"],

@@ -1,0 +1,44 @@
+{
+  "tool_cards": [
+    {
+      "id": "tool-context-pack-builder",
+      "title": "Context Pack Builder",
+      "summary": "A service component that assembles source-backed signals, curated knowledge, data limits, and verification steps for one agent task.",
+      "source_urls": ["https://github.com/lynlyn0215/Newswiki/blob/main/service/app/context_pack.py"],
+      "topics": ["agent-context", "mcp", "pre-plan-brief"],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "tool_type": "service-pattern",
+      "source_type": "recommended_template",
+      "privacy_level": "public",
+      "actionability": "install_or_configure",
+      "homepage_url": "https://github.com/lynlyn0215/Newswiki/blob/main/service/app/context_pack.py",
+      "use_cases": ["agent pre-plan briefing", "source-backed product judgment", "retrieval decision logging"],
+      "agent_fit": "Useful when an agent needs compact task-specific context before planning.",
+      "install_hint": "Expose as a read-only hosted MCP tool before adding write-back or private tenant data.",
+      "data_limits": ["Internal Newswiki implementation template; not external market evidence."]
+    },
+    {
+      "id": "tool-ab-eval-runner",
+      "title": "Manual A/B Eval Runner",
+      "summary": "A lightweight evaluation workflow that prepares baseline and Newswiki-context prompts for the same task.",
+      "source_urls": ["https://github.com/lynlyn0215/Newswiki/blob/main/eval/prepare_ab_run.py"],
+      "topics": ["evaluation", "agent-context", "product-strategy"],
+      "updated_at": "2026-05-07T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "tool_type": "evaluation-workflow",
+      "source_type": "recommended_template",
+      "privacy_level": "public",
+      "actionability": "run",
+      "homepage_url": "https://github.com/lynlyn0215/Newswiki/blob/main/eval/prepare_ab_run.py",
+      "use_cases": ["manual A/B eval", "cross-agent comparison", "brief quality review"],
+      "agent_fit": "Useful before deciding whether Newswiki context actually changes an agent's recommendation.",
+      "install_hint": "Run `python eval\\prepare_ab_run.py eval\\tasks\\001-skill-mcp-positioning.json` and paste prompts into fresh agent sessions.",
+      "data_limits": ["Internal Newswiki evaluation workflow; not external market evidence."]
+    }
+  ]
+}

@@ -40,12 +40,27 @@ Every item exposed to hosted service consumers must include:
 
 ### Signal
 
-Recommended fields:
+Required for real `signals.json` exports:
+
+- `source_published_at`
+- `observed_at`
+- `last_verified_at`
+- `stale_after`
+- `why_it_matters`
+- `entities`
+- `affected_tasks`
+- `decision_impact`
+- `source_confidence`
+- `time_sensitivity`
+- `source_claim`
+- `newswiki_interpretation`
+- `data_limits`
+
+Recommended optional fields:
 
 - `published_at`
 - `category`
 - `impact`
-- `why_it_matters`
 
 ### Knowledge Page
 

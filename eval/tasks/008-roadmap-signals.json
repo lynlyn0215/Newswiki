@@ -1,0 +1,38 @@
+{
+  "id": "008-roadmap-signals",
+  "task": "Which external signals should influence the next Newswiki roadmap decision?",
+  "topic": "product-strategy",
+  "needs_fresh_facts": true,
+  "expected_context": [
+    "ranked signals",
+    "decision impact",
+    "confidence"
+  ],
+  "success_signals": [
+    "prioritizes a small set of signals",
+    "explains what not to assume"
+  ],
+  "expected_context_checks": [
+    {
+      "label": "rankable roadmap signals",
+      "all_terms": [
+        "roadmap"
+      ],
+      "fields_present": [
+        "decision_impact",
+        "confidence"
+      ]
+    },
+    {
+      "label": "confidence metadata",
+      "any_terms": [
+        "high",
+        "medium"
+      ],
+      "fields_present": [
+        "source_confidence",
+        "time_sensitivity"
+      ]
+    }
+  ]
+}

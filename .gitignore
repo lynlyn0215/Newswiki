@@ -9,6 +9,7 @@
 /reports/
 /outputs/
 /chrome-profile/
+/eval/runs/
 
 # Runtime artifacts
 *.db

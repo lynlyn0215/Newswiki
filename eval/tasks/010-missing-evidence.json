@@ -1,0 +1,46 @@
+{
+  "id": "010-missing-evidence",
+  "task": "What evidence is missing before Newswiki should continue productizing the hosted MCP service?",
+  "topic": "product-strategy",
+  "needs_fresh_facts": false,
+  "expected_context": [
+    "eval gate",
+    "customer evidence gaps",
+    "signal quality gaps"
+  ],
+  "success_signals": [
+    "names measurable missing evidence",
+    "uses decision gate rather than enthusiasm"
+  ],
+  "expected_context_checks": [
+    {
+      "label": "eval gate",
+      "all_terms": [
+        "eval"
+      ],
+      "fields_present": [
+        "decision_impact"
+      ]
+    },
+    {
+      "label": "customer evidence gaps",
+      "all_terms": [
+        "customer",
+        "evidence"
+      ],
+      "fields_present": [
+        "key_points"
+      ]
+    },
+    {
+      "label": "signal quality gaps",
+      "all_terms": [
+        "signal",
+        "quality"
+      ],
+      "fields_present": [
+        "key_points"
+      ]
+    }
+  ]
+}

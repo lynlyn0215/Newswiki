@@ -18,8 +18,9 @@ class SearchServiceTest(unittest.TestCase):
     def test_search_signals_by_query(self) -> None:
         results = self.search.search("signals", "hosted MCP", limit=5)
 
-        self.assertEqual(len(results), 1)
-        self.assertEqual(results[0].id, "signal-demo-001")
+        self.assertTrue(results)
+        self.assertLessEqual(len(results), 5)
+        self.assertTrue(any(result.id == "signal-2026-vercel-remote-mcp" for result in results))
 
     def test_filters_by_topic(self) -> None:
         results = self.search.search("signals", "hosted", topic="missing-topic", limit=5)

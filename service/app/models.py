@@ -25,6 +25,14 @@ class PublicItem:
 class ContextPack:
     task: str
     answer: str
+    brief_type: str
+    needs_fresh_facts: bool
+    retrieval_decision: dict[str, dict[str, Any]]
+    relevant_signals: list[PublicItem]
+    relevant_knowledge: list[PublicItem]
+    stale_assumption_warnings: list[str]
+    what_not_to_assume: list[str]
+    suggested_verification_steps: list[str]
     signals: list[PublicItem]
     knowledge: list[PublicItem]
     tools: list[PublicItem]
@@ -44,6 +52,14 @@ class ContextPack:
         return {
             "task": self.task,
             "answer": self.answer,
+            "brief_type": self.brief_type,
+            "needs_fresh_facts": self.needs_fresh_facts,
+            "retrieval_decision": self.retrieval_decision,
+            "relevant_signals": [item_to_dict(item) for item in self.relevant_signals],
+            "relevant_knowledge": [item_to_dict(item) for item in self.relevant_knowledge],
+            "stale_assumption_warnings": self.stale_assumption_warnings,
+            "what_not_to_assume": self.what_not_to_assume,
+            "suggested_verification_steps": self.suggested_verification_steps,
             "signals": [item_to_dict(item) for item in self.signals],
             "knowledge": [item_to_dict(item) for item in self.knowledge],
             "tools": [item_to_dict(item) for item in self.tools],

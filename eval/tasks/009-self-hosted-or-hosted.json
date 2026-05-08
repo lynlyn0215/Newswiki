@@ -1,0 +1,37 @@
+{
+  "id": "009-self-hosted-or-hosted",
+  "task": "Should a user self-host Newswiki, use hosted context, or both?",
+  "topic": "open-core",
+  "needs_fresh_facts": false,
+  "expected_context": [
+    "open-core positioning",
+    "privacy boundary",
+    "maintenance tradeoffs"
+  ],
+  "success_signals": [
+    "gives a segmented answer",
+    "does not claim hosted service is already production-ready"
+  ],
+  "expected_context_checks": [
+    {
+      "label": "open-core positioning",
+      "all_terms": [
+        "hosted",
+        "self"
+      ],
+      "fields_present": [
+        "data_limits"
+      ]
+    },
+    {
+      "label": "maintenance tradeoffs",
+      "all_terms": [
+        "maintenance",
+        "tradeoffs"
+      ],
+      "fields_present": [
+        "why_it_matters"
+      ]
+    }
+  ]
+}

@@ -1,16 +1,18 @@
 # Newswiki
 
-Newswiki is a local-first personal agent information system template and hosted MCP alpha skeleton.
+Newswiki gives coding agents current, source-backed pre-plan briefs before they start work.
 
 中文说明见 [README.zh-CN.md](README.zh-CN.md).
 
-It helps an agent answer the context questions that matter before it starts work:
+It is not a generic RSS reader, private wiki, or skill runtime. It is a local-first template and hosted MCP alpha skeleton for building task-ready context packs:
 
-1. What do I already know? -> Wiki MCP
-2. What happened recently? -> Newsfeed MCP
-3. What tools or workflows matter for this task? -> Capability MCP, on demand
+- recent external signals that may change the answer
+- prior durable knowledge when project history matters
+- source URLs, freshness, confidence, and data limits
+- warnings about stale assumptions or demo-only data
+- optional tool/workflow routing when the task needs it
 
-Most people can build a feed, a wiki, or a small website. Newswiki's core idea is the context protocol: give the agent a clean way to query durable memory and recent external signals before choosing a plan. Capability routing is useful when the task is about tools, workflows, MCP setup, or local availability; it is not forced into every task.
+Most people can build a feed, a wiki, or a small website. Newswiki's core idea is the pre-plan brief: before a coding agent plans, it should know which current facts, local decisions, and source-backed limits matter for this task.
 
 ## Hosted Alpha
 
@@ -20,15 +22,17 @@ This repository now includes a public-safe hosted alpha path:
 - read-only REST API
 - hosted MCP adapter
 - real stdio MCP smoke client
-- static context-pack playground
+- static pre-plan brief playground
 
 Run the full path with [docs/quickstart-hosted-alpha.md](docs/quickstart-hosted-alpha.md).
 
-The hosted alpha uses fake example data by default. It is a product skeleton, not a hosted service account or private data backend.
+The hosted alpha includes fake `*.example.json` files and a small curated public seed export. It is a product skeleton, not a hosted service account or private data backend.
 
 For the self-hosted vs hosted-service positioning, read [docs/open-core.md](docs/open-core.md).
 
-## Core MCPs
+## Input Layers
+
+The old three-MCP shape is now treated as input layers for the pre-plan brief, not as three equal product surfaces.
 
 ### Wiki MCP
 
@@ -78,13 +82,13 @@ To test the product path with another agent, read [docs/testing-plan.md](docs/te
 
 ## Repository Shape
 
-- `mcp/` - three core MCP server templates.
+- `mcp/` - optional input-layer MCP templates for wiki, newsfeed, and capability routing.
 - `service/` - hosted alpha REST and MCP service skeleton.
 - `templates/` - private instance templates.
 - `pipeline/` - optional collection, processing, storage, and report skeletons.
 - `connectors/` - optional integrations.
 - `web/` - optional static playground and frontend skeleton.
-- `examples/` - fake data only.
+- `examples/` - public-safe demo files and curated seed exports.
 - `newswiki.setup.json` - machine-readable setup manifest for agents.
 
 Agent bootstrap:

@@ -70,11 +70,17 @@ The setup script:
 
 After setup, the user's agent should not force every MCP into every task.
 
-Use this order:
+Preferred product path:
 
-1. Wiki MCP for prior decisions, reusable patterns, known pitfalls, and gaps.
-2. Newsfeed MCP when recent external information, market context, or source freshness matters.
-3. Capability MCP only when the task requires tool choice, workflow routing, MCP setup, CLI availability, or automation selection.
+1. Build a Newswiki pre-plan brief with `get_context_for_task` when the task may benefit from external signals, durable knowledge, or capability routing.
+2. Use the returned `retrieval_decision` to explain which layers were queried or skipped.
+3. Fall back to direct input-layer MCP calls only when testing local setup or debugging a specific connector.
+
+Input-layer rules:
+
+- Wiki MCP is for prior decisions, reusable patterns, known pitfalls, and gaps.
+- Newsfeed MCP is for recent external information, market context, or source freshness.
+- Capability MCP is only for tool choice, workflow routing, MCP setup, CLI availability, or automation selection.
 
 If Capability MCP returns a generic or irrelevant chain, report that limitation and continue from stronger evidence.
 

@@ -36,8 +36,12 @@ def build_context_for_task(task: str, *, topic: str | None = None, token_budget:
     settings = Settings.from_env()
     repository = PublicExportRepository(settings.public_export_dir)
     search = SearchService(repository)
-    private_memory = ConnectorRepository(settings.user_memory_dir).load("private_memory")
-    local_capabilities = ConnectorRepository(settings.local_capability_dir).load("local_capabilities")
+    private_memory = []
+    local_capabilities = []
+    if settings.allows_user_private():
+        private_memory = ConnectorRepository(settings.user_memory_dir).load("private_memory")
+    if settings.allows_local_capability():
+        local_capabilities = ConnectorRepository(settings.local_capability_dir).load("local_capabilities")
     builder = ContextPackBuilder(
         search,
         settings.layers,

@@ -4,11 +4,11 @@ Use this before making the repository public or tagging an alpha release.
 
 ## Repository Positioning
 
-- README explains Newswiki as a local-first personal agent information system template.
+- README explains Newswiki as a source-backed pre-plan brief skeleton for coding agents.
 - README explains the hosted alpha as a product skeleton, not a live hosted service.
 - README links to the open-core positioning: self-hostable template plus hosted intelligence layer.
 - Chinese README has the same core positioning and links.
-- Core MCPs are clear: Capability MCP, Wiki MCP, Newsfeed MCP.
+- Input MCP layers are clear: Capability MCP, Wiki MCP, Newsfeed MCP.
 - Hosted alpha path is clear: public-safe export -> REST API -> MCP adapter -> playground.
 
 ## Privacy
@@ -72,7 +72,7 @@ http://127.0.0.1:8765/index.html
 Suggested description:
 
 ```text
-MCP-first personal agent information system template with public-safe Newswiki hosted alpha.
+Source-backed pre-plan briefs for coding agents, with public-safe Newswiki hosted alpha.
 ```
 
 Suggested topics:
@@ -90,6 +90,6 @@ v0.1.0-alpha
 ## Before Public
 
 - Keep the repo private until final manual review is complete.
-- Confirm examples are fake.
+- Confirm fake examples and curated public seed exports are clearly labeled.
 - Confirm docs do not imply Qwen, NotebookLM, Vercel, AgentSearch, or any vendor is required.
 - Confirm no private source folders were copied into this template.

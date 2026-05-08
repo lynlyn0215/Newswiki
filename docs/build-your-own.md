@@ -6,10 +6,11 @@ Goal:
 
 ```text
 Your task
-  -> Capability MCP: what tools can my agent use?
-  -> Wiki MCP: what does my system already know?
-  -> Newsfeed MCP: what happened recently?
-  -> agent works with better context
+  -> get_context_for_task
+      -> current signals when facts may be stale
+      -> durable knowledge when history matters
+      -> capability routing only for setup/tool tasks
+  -> agent plans with a source-backed brief
 ```
 
 ## 1. Install
@@ -38,7 +39,7 @@ This creates:
 
 Do not publish this private instance.
 
-## 3. Configure The Three MCPs
+## 3. Configure MCP Input Layers
 
 Open:
 
@@ -53,20 +54,21 @@ Replace:
 
 Then copy the blocks into your agent's MCP config.
 
-## 4. Smoke Test The Startup Context
+## 4. Smoke Test The Pre-Plan Brief
 
 Ask your agent:
 
 ```text
-Before planning, query Capability MCP, Wiki MCP, and Newsfeed MCP for this task:
+Before planning, build a Newswiki pre-plan brief for this task. Query external signals, wiki memory, or capability routing only if the task needs them:
 "Help me design a weekly research workflow."
 ```
 
 Expected behavior:
 
-- Capability MCP returns local skills/tools/chains.
-- Wiki MCP returns the starter control pages.
-- Newsfeed MCP returns fake demo articles.
+- The agent explains which context layers it used or skipped.
+- Capability routing runs only if the task needs tools or setup.
+- Newsfeed/current signals run only if recent facts matter.
+- Wiki/durable knowledge runs when prior context matters.
 
 If that works, the skeleton is alive.
 
@@ -120,7 +122,7 @@ Your private wiki starts with:
 - `gaps.md`
 - `search-map.md`
 
-When the agent learns something reusable, write it back through Wiki MCP.
+When the agent learns something reusable, write it back through Wiki MCP in your private/local workflow. Write-back is not a hosted v1 default.
 
 Do not write raw run logs into control pages.
 

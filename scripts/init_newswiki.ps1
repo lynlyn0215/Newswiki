@@ -50,8 +50,8 @@ Start:
 2. Edit config/pipeline.example.yaml.
 3. Refresh capabilities when your local tools change:
    python "$repo\scripts\build_capabilities.py" --output "$targetPath\capabilities.json"
-4. Configure the three MCPs from config/mcp.example.toml.
-5. Ask your agent to follow AGENTS.md.
+4. Configure the Newswiki MCP/input layers from config/mcp.example.toml.
+5. Ask your agent to follow AGENTS.md and prefer get_context_for_task when available.
 "@ | Set-Content -Path (Join-Path $targetPath "README.md") -Encoding UTF8
 
 Write-Output "Created private Newswiki instance at $targetPath"

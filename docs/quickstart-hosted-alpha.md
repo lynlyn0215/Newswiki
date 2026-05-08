@@ -74,10 +74,11 @@ Expected shape:
   "ok": true,
   "tools": ["get_context_for_task", "..."],
   "context_pack": {
-    "signals": 1,
-    "knowledge": 1,
-    "tools": 1,
-    "sources": 3
+    "brief_type": "pre_plan",
+    "signals": 3,
+    "knowledge": 2,
+    "tools": 0,
+    "sources": 5
   }
 }
 ```
@@ -86,7 +87,7 @@ This starts the MCP server as a child process, lists tools, calls `get_context_f
 
 ## 5. Configure an MCP Client
 
-Use [mcp-client-setup.md](mcp-client-setup.md) for client configuration snippets.
+Use [mcp-client-setup.md](mcp-client-setup.md) for client configuration snippets. The client should call `get_context_for_task` first for non-trivial work; direct signal/knowledge/tool search is for support and debugging.
 
 ## 6. Open the Static Playground
 

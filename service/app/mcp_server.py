@@ -141,6 +141,7 @@ class HostedMCPService:
             "get_context_for_task",
             api_key,
             lambda _search, builder: builder.build(task, topic=topic, token_budget=token_budget).to_dict(),
+            needs_context_builder=True,
         )
 
     def _run_tool(
@@ -148,6 +149,8 @@ class HostedMCPService:
         tool: str,
         api_key: str | None,
         handler: Callable[[SearchService, ContextPackBuilder], ToolResult],
+        *,
+        needs_context_builder: bool = False,
     ) -> ToolResult:
         if not self._authorized(api_key):
             usage_log.record(tool=tool, status="unauthorized")
@@ -156,14 +159,9 @@ class HostedMCPService:
             settings = self.settings_factory()
             repository = PublicExportRepository(settings.public_export_dir)
             search = SearchService(repository)
-            private_memory = ConnectorRepository(settings.user_memory_dir).load("private_memory")
-            local_capabilities = ConnectorRepository(settings.local_capability_dir).load("local_capabilities")
-            builder = ContextPackBuilder(
-                search,
-                settings.layers,
-                private_memory=private_memory,
-                local_capabilities=local_capabilities,
-            )
+            builder = ContextPackBuilder(search, settings.layers)
+            if needs_context_builder:
+                builder = self._context_builder(settings, search)
             result = handler(search, builder)
         except (ConnectorExportError, PublicExportError) as exc:
             usage_log.record(tool=tool, status="degraded")
@@ -171,6 +169,20 @@ class HostedMCPService:
         result_count = count_result_items(result)
         usage_log.record(tool=tool, status="ok", result_count=result_count)
         return {"ok": True, **result}
+
+    def _context_builder(self, settings: Settings, search: SearchService) -> ContextPackBuilder:
+        private_memory: list[PublicItem] = []
+        local_capabilities: list[PublicItem] = []
+        if settings.allows_user_private():
+            private_memory = ConnectorRepository(settings.user_memory_dir).load("private_memory")
+        if settings.allows_local_capability():
+            local_capabilities = ConnectorRepository(settings.local_capability_dir).load("local_capabilities")
+        return ContextPackBuilder(
+            search,
+            settings.layers,
+            private_memory=private_memory,
+            local_capabilities=local_capabilities,
+        )
 
     def _authorized(self, api_key: str | None) -> bool:
         if not api_key:
@@ -220,11 +232,22 @@ def make_app() -> FastMCP:
     service = HostedMCPService()
     app = FastMCP(
         "newswiki-hosted-alpha",
-        instructions="Read-only hosted Newswiki context tools for agent startup and task planning.",
+        instructions="Read-only hosted Newswiki tools for source-backed pre-plan briefs.",
     )
 
     @app.tool()
+    def get_context_for_task(
+        api_key: str,
+        task: str,
+        topic: str | None = None,
+        token_budget: int = 1200,
+    ) -> str:
+        """Default entry point for non-trivial tasks; returns a source-backed pre-plan brief."""
+        return dumps(service.get_context_for_task(api_key=api_key, task=task, topic=topic, token_budget=token_budget))
+
+    @app.tool()
     def latest_signals(api_key: str, topic: str | None = None, days: int | None = None, limit: int = 10) -> str:
+        """Support/debug tool for inspecting hosted signal data directly; prefer get_context_for_task for task work."""
         return dumps(service.latest_signals(api_key=api_key, topic=topic, days=days, limit=limit))
 
     @app.tool()
@@ -235,10 +258,12 @@ def make_app() -> FastMCP:
         days: int | None = None,
         limit: int = 10,
     ) -> str:
+        """Support/debug tool for direct signal search; prefer get_context_for_task for task work."""
         return dumps(service.search_news(api_key=api_key, query=query, topic=topic, days=days, limit=limit))
 
     @app.tool()
     def search_knowledge(api_key: str, query: str, topic: str | None = None, limit: int = 10) -> str:
+        """Support/debug tool for direct curated knowledge search; prefer get_context_for_task for task work."""
         return dumps(service.search_knowledge(api_key=api_key, query=query, topic=topic, limit=limit))
 
     @app.tool()
@@ -248,20 +273,13 @@ def make_app() -> FastMCP:
         environment: str | None = None,
         limit: int = 10,
     ) -> str:
+        """Support/debug tool for direct tool-card lookup; prefer get_context_for_task for task work."""
         return dumps(service.recommend_agent_tools(api_key=api_key, task=task, environment=environment, limit=limit))
 
     @app.tool()
     def get_topic_brief(api_key: str, topic: str, depth: str = "standard") -> str:
+        """Support/debug tool for direct topic brief lookup; prefer get_context_for_task for task work."""
         return dumps(service.get_topic_brief(api_key=api_key, topic=topic, depth=depth))
-
-    @app.tool()
-    def get_context_for_task(
-        api_key: str,
-        task: str,
-        topic: str | None = None,
-        token_budget: int = 1200,
-    ) -> str:
-        return dumps(service.get_context_for_task(api_key=api_key, task=task, topic=topic, token_budget=token_budget))
 
     return app
 

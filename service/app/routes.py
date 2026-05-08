@@ -28,24 +28,31 @@ class ToolRecommendRequest(BaseModel):
     limit: int = 10
 
 
-def services() -> tuple[PublicExportRepository, SearchService, ContextPackBuilder]:
+def public_services() -> tuple[PublicExportRepository, SearchService, Settings]:
     settings = Settings.from_env()
     repository = PublicExportRepository(settings.public_export_dir)
     search = SearchService(repository)
-    private_memory = ConnectorRepository(settings.user_memory_dir).load("private_memory")
-    local_capabilities = ConnectorRepository(settings.local_capability_dir).load("local_capabilities")
-    builder = ContextPackBuilder(
+    return repository, search, settings
+
+
+def context_builder(settings: Settings, search: SearchService) -> ContextPackBuilder:
+    private_memory = []
+    local_capabilities = []
+    if settings.allows_user_private():
+        private_memory = ConnectorRepository(settings.user_memory_dir).load("private_memory")
+    if settings.allows_local_capability():
+        local_capabilities = ConnectorRepository(settings.local_capability_dir).load("local_capabilities")
+    return ContextPackBuilder(
         search,
         settings.layers,
         private_memory=private_memory,
         local_capabilities=local_capabilities,
     )
-    return repository, search, builder
 
 
 @router.get("/health")
 def health() -> dict[str, object]:
-    repository, _, _ = services()
+    repository, _, _ = public_services()
     data = repository.health()
     usage_log.record(tool="health", status="ok" if data["ok"] else "degraded")
     return data
@@ -53,7 +60,7 @@ def health() -> dict[str, object]:
 
 @router.get("/signals")
 def latest_signals(topic: str | None = None, limit: int = Query(default=10, ge=1, le=50)) -> dict[str, object]:
-    _, search, _ = services()
+    _, search, _ = public_services()
     items = search.latest_signals(topic=topic, limit=limit)
     usage_log.record(tool="latest_signals", status="ok", result_count=len(items))
     return {"signals": [item_to_dict(item) for item in items]}
@@ -61,7 +68,7 @@ def latest_signals(topic: str | None = None, limit: int = Query(default=10, ge=1
 
 @router.get("/news/search")
 def search_news(query: str, topic: str | None = None, limit: int = Query(default=10, ge=1, le=50)) -> dict[str, object]:
-    _, search, _ = services()
+    _, search, _ = public_services()
     items = search.search("signals", query, topic=topic, limit=limit)
     usage_log.record(tool="search_news", status="ok", result_count=len(items))
     return {"signals": [item_to_dict(item) for item in items]}
@@ -69,7 +76,7 @@ def search_news(query: str, topic: str | None = None, limit: int = Query(default
 
 @router.get("/knowledge/search")
 def search_knowledge(query: str, topic: str | None = None, limit: int = Query(default=10, ge=1, le=50)) -> dict[str, object]:
-    _, search, _ = services()
+    _, search, _ = public_services()
     items = search.search("knowledge_pages", query, topic=topic, limit=limit)
     usage_log.record(tool="search_knowledge", status="ok", result_count=len(items))
     return {"knowledge": [item_to_dict(item) for item in items]}
@@ -77,7 +84,7 @@ def search_knowledge(query: str, topic: str | None = None, limit: int = Query(de
 
 @router.post("/tools/recommend")
 def recommend_tools(request: ToolRecommendRequest) -> dict[str, object]:
-    _, search, _ = services()
+    _, search, _ = public_services()
     query = request.task if not request.environment else f"{request.task} {request.environment}"
     items = search.search("tool_cards", query, limit=max(1, min(request.limit, 50)))
     usage_log.record(tool="recommend_tools", status="ok", result_count=len(items))
@@ -86,7 +93,7 @@ def recommend_tools(request: ToolRecommendRequest) -> dict[str, object]:
 
 @router.get("/topics/{topic}/brief")
 def topic_brief(topic: str, depth: str = "standard") -> dict[str, object]:
-    _, search, _ = services()
+    _, search, _ = public_services()
     briefs = search.search("briefs", topic, topic=topic, limit=1)
     usage_log.record(tool="topic_brief", status="ok", result_count=len(briefs))
     return {"topic": topic, "depth": depth, "briefs": [item_to_dict(item) for item in briefs]}
@@ -94,7 +101,8 @@ def topic_brief(topic: str, depth: str = "standard") -> dict[str, object]:
 
 @router.post("/context")
 def context_for_task(request: ContextRequest) -> dict[str, object]:
-    _, _, builder = services()
+    _, search, settings = public_services()
+    builder = context_builder(settings, search)
     pack = builder.build(request.task, topic=request.topic, token_budget=request.token_budget).to_dict()
     result_count = len(pack["signals"]) + len(pack["knowledge"]) + len(pack["tools"])
     usage_log.record(tool="context", status="ok", result_count=result_count)

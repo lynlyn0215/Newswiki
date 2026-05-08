@@ -1,0 +1,39 @@
+{
+  "id": "005-new-devtool-relevance",
+  "task": "A new AI devtool launched this week. Is it relevant to agent-context product builders?",
+  "topic": "ai-devtools",
+  "needs_fresh_facts": true,
+  "expected_context": [
+    "source-backed launch signal",
+    "affected tasks",
+    "why it matters"
+  ],
+  "success_signals": [
+    "does not answer without verification",
+    "maps signal to product impact"
+  ],
+  "expected_context_checks": [
+    {
+      "label": "source-backed devtool signal",
+      "all_terms": [
+        "cursor"
+      ],
+      "fields_present": [
+        "source_claim",
+        "source_urls"
+      ]
+    },
+    {
+      "label": "affected tasks and why it matters",
+      "any_terms": [
+        "dynamic",
+        "token",
+        "reduction"
+      ],
+      "fields_present": [
+        "affected_tasks",
+        "why_it_matters"
+      ]
+    }
+  ]
+}

@@ -81,43 +81,44 @@ Expected answer:
 - hosted service gives maintained intelligence and operational relief
 - the two are complementary
 
-## Product-Value MCP Test
+## Product-Value Context Test
 
-After Claude Code has connected the three local MCP servers, use this prompt to test whether it actually uses Newswiki context during real work:
+After Claude Code has connected the Newswiki MCP server or local input-layer MCPs, use this prompt to test whether it actually uses the v1 context surface during real work:
 
 ```text
 I want to decide whether a hosted Newswiki MCP service is worth continuing as a SaaS product.
 
-Follow the Newswiki startup protocol:
+Follow the Newswiki context protocol:
 
-1. Use Wiki MCP to retrieve past knowledge about Newswiki, MCP, hosted service, open-core positioning, prior decisions, patterns, pitfalls, and gaps.
-2. Use Newsfeed MCP to check recent signals or source health. If the Newsfeed data is only demo data, say that clearly.
-3. Use Capability MCP only if this task requires choosing tools, workflows, MCP setup, or local capability routing. If you skip it, say why.
+1. First call `get_context_for_task` for this task if available.
+2. Read `retrieval_decision`, `data_limits`, freshness, confidence, and sources before answering.
+3. Use direct Wiki MCP, Newsfeed MCP, or Capability MCP calls only if `get_context_for_task` is unavailable or if you are debugging a specific input layer.
+4. Use Capability routing only if this task requires choosing tools, workflows, MCP setup, or local capability routing. If you skip it, say why.
 
 Then give me a product judgment:
 
 - the 3 user scenarios most worth validating
 - how to test each scenario
 - success criteria for each test
-- which MCP tools you actually called
-- how each MCP result changed your conclusion
-- whether Capability MCP was useful, skipped, or a weak/generic signal
+- which Newswiki tools you actually called
+- how the context pack changed or limited your conclusion
+- which context layers were queried, skipped, or weak
 
-Do not answer from general knowledge alone. Do not pretend demo news is market evidence.
+Do not answer from general knowledge alone if Newswiki context is available. Do not pretend demo data or internal docs are external market evidence.
 ```
 
 Pass if Claude Code:
 
-- calls at least one Wiki MCP tool
-- calls Newsfeed MCP or explicitly explains why current signals are unavailable
-- calls Capability MCP only when tool/workflow routing matters, or explicitly says why it was skipped
+- calls `get_context_for_task` when available
+- explains `retrieval_decision`
+- calls direct input-layer MCP tools only when the flagship context tool is unavailable or the layer needs debugging
 - distinguishes empty fresh-instance data from real prior knowledge
 - distinguishes demo news from market evidence
-- changes or qualifies its recommendation based on MCP results
+- changes or qualifies its recommendation based on Newswiki context
 
 Fail if Claude Code:
 
-- gives a generic product strategy answer without MCP calls
+- gives a generic product strategy answer without Newswiki context calls when they are available
 - claims the demo newsfeed is real market validation
 - treats a generic capability catalog as stronger than source evidence
-- cannot explain how MCP context affected the answer
+- cannot explain how the context pack affected the answer

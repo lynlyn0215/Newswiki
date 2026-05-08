@@ -82,19 +82,28 @@ Call:
 get_context_for_task
 ```
 
+Use `get_context_for_task` as the default entry point for non-trivial tasks. The other tools are support/debug surfaces for direct inspection of one input layer.
+
 Expected response:
 
 ```json
 {
   "ok": true,
   "task": "Design a hosted MCP context service",
+  "brief_type": "pre_plan",
   "answer": "...",
-  "signals": [],
-  "knowledge": [],
+  "retrieval_decision": {
+    "external_signals": {"status": "queried"},
+    "durable_knowledge": {"status": "queried"},
+    "capability_routing": {"status": "skipped"}
+  },
+  "signals": [{"title": "..."}],
+  "knowledge": [{"title": "..."}],
   "tools": [],
-  "sources": [],
+  "sources": ["https://..."],
   "freshness": "...",
   "confidence": "medium",
+  "data_limits": ["..."],
   "suggested_next_queries": []
 }
 ```

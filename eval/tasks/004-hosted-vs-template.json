@@ -1,0 +1,37 @@
+{
+  "id": "004-hosted-vs-template",
+  "task": "Should Newswiki prioritize a hosted MCP service or remain a local-first template?",
+  "topic": "mcp",
+  "needs_fresh_facts": false,
+  "expected_context": [
+    "open-core decision",
+    "privacy boundary",
+    "hosted alpha constraints"
+  ],
+  "success_signals": [
+    "self-hosted and hosted roles are separated",
+    "demo data is not treated as proof"
+  ],
+  "expected_context_checks": [
+    {
+      "label": "privacy boundary",
+      "all_terms": [
+        "public",
+        "export"
+      ],
+      "fields_present": [
+        "data_limits"
+      ]
+    },
+    {
+      "label": "hosted alpha constraints",
+      "all_terms": [
+        "hosted",
+        "private"
+      ],
+      "fields_present": [
+        "decision_impact"
+      ]
+    }
+  ]
+}

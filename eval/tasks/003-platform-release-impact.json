@@ -1,0 +1,36 @@
+{
+  "id": "003-platform-release-impact",
+  "task": "Did recent Claude, Codex, or Hermes releases change the Newswiki product plan?",
+  "topic": "model-releases",
+  "needs_fresh_facts": true,
+  "expected_context": [
+    "release dates",
+    "official sources",
+    "decision impact"
+  ],
+  "success_signals": [
+    "source-backed update changes or confirms plan",
+    "unknowns are stated"
+  ],
+  "expected_context_checks": [
+    {
+      "label": "official release/update source",
+      "all_terms": [
+        "codex"
+      ],
+      "fields_present": [
+        "source_kind",
+        "source_published_at"
+      ]
+    },
+    {
+      "label": "decision impact",
+      "all_terms": [
+        "capability"
+      ],
+      "fields_present": [
+        "decision_impact"
+      ]
+    }
+  ]
+}
