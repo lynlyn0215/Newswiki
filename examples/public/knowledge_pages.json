@@ -11,7 +11,8 @@
         "mcp",
         "privacy",
         "agent-infrastructure",
-        "hosted-context"
+        "hosted-context",
+        "open-core"
       ],
       "updated_at": "2026-05-07T00:00:00Z",
       "freshness": "weekly",
@@ -57,7 +58,9 @@
         "mcp",
         "agent-context",
         "pre-plan-brief",
-        "product-strategy"
+        "product-strategy",
+        "ai-devtools",
+        "model-releases"
       ],
       "updated_at": "2026-05-07T00:00:00Z",
       "freshness": "weekly",
@@ -101,7 +104,10 @@
       "topics": [
         "evaluation",
         "product-strategy",
-        "agent-context"
+        "agent-context",
+        "ai-devtools",
+        "model-releases",
+        "open-core"
       ],
       "updated_at": "2026-05-07T00:00:00Z",
       "freshness": "weekly",
