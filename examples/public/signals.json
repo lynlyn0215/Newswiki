@@ -658,6 +658,101 @@
       "data_limits": [],
       "source_kind": "official source",
       "date_role": "source or release date"
+    },
+    {
+      "id": "signal-2026-claude-opus-4-7-coding-agents",
+      "title": "Claude Opus 4.7 improves difficult coding and long-running agent work",
+      "summary": "Anthropic says Claude Opus 4.7 is generally available and improves advanced software engineering, long-running tasks, instruction following, vision, and verification behavior over Opus 4.6.",
+      "source_urls": [
+        "https://www.anthropic.com/news/claude-opus-4-7"
+      ],
+      "topics": [
+        "model-releases",
+        "claude",
+        "coding-agents",
+        "ai-devtools",
+        "product-strategy"
+      ],
+      "updated_at": "2026-05-09T00:00:00Z",
+      "freshness": "weekly",
+      "confidence": "high",
+      "public_safe": true,
+      "category": "model-release",
+      "impact": "Claude model updates can change the baseline for coding-agent workflows and reduce the need for custom compensating process around difficult multi-step tasks.",
+      "why_it_matters": "Newswiki roadmap and eval tasks that mention platform releases need Claude-specific model signals, not only Codex signals, or they understate multi-platform change.",
+      "affected_tasks": [
+        "platform-release-impact",
+        "model-api-update",
+        "coding-agent-roadmap",
+        "stale-assumption-audit"
+      ],
+      "decision_impact": "When assessing whether recent model updates change a plan, check Claude release notes alongside Codex and Hermes before concluding the signal is single-platform.",
+      "last_verified_at": "2026-05-09",
+      "stale_after": "2026-06-30",
+      "entities": [
+        "Anthropic",
+        "Claude",
+        "Claude Opus 4.7"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "high",
+      "observed_at": "2026-05-09",
+      "source_published_at": "2026-04-16",
+      "source_claim": "Anthropic says Claude Opus 4.7 is generally available and improves advanced software engineering, long-running tasks, instruction following, vision, and verification behavior over Opus 4.6.",
+      "newswiki_interpretation": "Claude model releases are a first-class input for coding-agent product decisions because they can move the baseline for agent planning, verification, and long-running task handoff.",
+      "data_limits": [
+        "Official vendor release note; not independent benchmark validation."
+      ],
+      "source_kind": "official source",
+      "date_role": "source or release date"
+    },
+    {
+      "id": "signal-2026-hermes-4-open-reasoning-models",
+      "title": "Nous releases Hermes 4 open-weight hybrid reasoning models",
+      "summary": "Nous Research lists Hermes 4 model releases and a technical report describing a family of hybrid reasoning models evaluated across mathematical reasoning, coding, knowledge, comprehension, and alignment benchmarks.",
+      "source_urls": [
+        "https://nousresearch.com/releases",
+        "https://nousresearch.com/wp-content/uploads/2025/08/Hermes_4_Technical_Report.pdf"
+      ],
+      "topics": [
+        "model-releases",
+        "hermes",
+        "open-models",
+        "coding-agents",
+        "product-strategy"
+      ],
+      "updated_at": "2026-05-09T00:00:00Z",
+      "freshness": "archival",
+      "confidence": "high",
+      "public_safe": true,
+      "category": "model-release",
+      "impact": "Open-weight reasoning model releases can affect whether Newswiki should assume hosted frontier APIs are the only relevant agent substrate.",
+      "why_it_matters": "Newswiki context packs need Hermes model signals to compare closed-platform agent changes with open-weight reasoning model progress.",
+      "affected_tasks": [
+        "platform-release-impact",
+        "model-api-update",
+        "self-hosted-or-hosted",
+        "open-core-positioning"
+      ],
+      "decision_impact": "When evaluating model-release impact, include open-weight Hermes releases as a separate branch from hosted API model updates.",
+      "last_verified_at": "2026-05-09",
+      "stale_after": "2026-08-31",
+      "entities": [
+        "Nous Research",
+        "Hermes 4",
+        "Hermes-4.3-Seed-36B"
+      ],
+      "source_confidence": "high",
+      "time_sensitivity": "medium",
+      "observed_at": "2026-05-09",
+      "source_published_at": "2025-08-26",
+      "source_claim": "Nous Research lists Hermes 4 model releases and a technical report describing open-weight hybrid reasoning models with coding and reasoning evaluations.",
+      "newswiki_interpretation": "Hermes model releases help Newswiki avoid overfitting model-release briefs to proprietary API providers.",
+      "data_limits": [
+        "Hermes 4 release is archival relative to 2026 tasks; Hermes-4.3-Seed-36B appears in the release index but needs separate benchmark review before strong performance claims."
+      ],
+      "source_kind": "official source",
+      "date_role": "source or release date"
     }
   ]
 }

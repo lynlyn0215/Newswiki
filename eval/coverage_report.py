@@ -155,7 +155,20 @@ def source_url_issues(pack: dict[str, Any], *, timeout: float) -> list[str]:
                     if response.status >= 400:
                         issues.append(f"{item['id']} source_url {url} returned HTTP {response.status}")
             except HTTPError as exc:
-                issues.append(f"{item['id']} source_url {url} returned HTTP {exc.code}")
+                if exc.code in {403, 405}:
+                    try:
+                        fallback = Request(url, headers={"User-Agent": "NewswikiEval/0.1"})
+                        with urlopen(fallback, timeout=timeout) as response:
+                            if response.status >= 400:
+                                issues.append(f"{item['id']} source_url {url} returned HTTP {response.status}")
+                    except HTTPError as fallback_exc:
+                        issues.append(f"{item['id']} source_url {url} returned HTTP {fallback_exc.code}")
+                    except URLError as fallback_exc:
+                        issues.append(f"{item['id']} source_url {url} failed: {fallback_exc.reason}")
+                    except TimeoutError:
+                        issues.append(f"{item['id']} source_url {url} timed out")
+                else:
+                    issues.append(f"{item['id']} source_url {url} returned HTTP {exc.code}")
             except URLError as exc:
                 issues.append(f"{item['id']} source_url {url} failed: {exc.reason}")
             except TimeoutError:
